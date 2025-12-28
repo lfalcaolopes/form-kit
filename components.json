@@ -18,5 +18,7 @@
     "lib": "@/form-kit",
     "hooks": "@/form-kit/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@acme": "https://acme.com/r/{name}.json"
+  }
 }
