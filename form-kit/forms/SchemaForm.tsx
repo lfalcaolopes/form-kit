@@ -1,12 +1,12 @@
 import { useId, useMemo } from 'react'
 import {
+  FormProvider,
   useForm,
   type DefaultValues,
   type FieldError as RHFFieldError,
   type FieldErrors,
   type FieldValues,
   type Path,
-  type RegisterOptions,
 } from 'react-hook-form'
 
 import {
@@ -15,15 +15,7 @@ import {
   type FormFieldConfig,
   type FormSchema,
 } from '@/form-kit/schema'
-import {
-  Field,
-  FieldContent,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSet,
-} from '@/form-kit/components/ui/field'
+import { FieldGroup } from '@/form-kit/components/fields/Field'
 
 type FieldValue<TField extends FormFieldConfig> =
   TField extends { field: typeof FieldType.Input }
@@ -85,177 +77,134 @@ export function SchemaForm<TSchema extends FormSchema>({
     return values
   }, [schema])
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues<TSchema>>({
+  const form = useForm<FormValues<TSchema>>({
     defaultValues,
   })
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = form
 
   const fields = Object.values(schema)
-  const toRegisterOptions = (
-    rules?: RegisterOptions,
-  ): RegisterOptions<FormValues<TSchema>, Path<FormValues<TSchema>>> | undefined =>
-    rules as
-      | RegisterOptions<FormValues<TSchema>, Path<FormValues<TSchema>>>
-      | undefined
 
   return (
-    <form
-      className={className}
-      onSubmit={handleSubmit(onSubmit)}
-      noValidate
-    >
-      <FieldGroup>
-        {fields.map((field) => {
-          const fieldName = field.name as Path<FormValues<TSchema>>
-          const fieldId = `${baseId}-${field.name}`
-          const fieldErrors = getFieldErrors(errors, fieldName)
-          const registerOptions = toRegisterOptions(field.rules)
+    <FormProvider {...form}>
+      <form
+        className={className}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
+        <FieldGroup>
+          {fields.map((field) => {
+            const fieldName = field.name as Path<FormValues<TSchema>>
+            const fieldId = `${baseId}-${field.name}`
+            const fieldErrors = getFieldErrors(errors, fieldName)
 
-          if (field.field === FieldType.Input) {
-            const Input = fieldTypeComponentMap[FieldType.Input]
-            return (
-              <Field key={fieldId}>
-                <FieldLabel htmlFor={fieldId}>{field.label}</FieldLabel>
-                <FieldContent>
-                  <Input
-                    id={fieldId}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    data-mask={field.mask}
-                    aria-invalid={!!fieldErrors?.length}
-                    {...register(fieldName, registerOptions)}
-                  />
-                  <FieldError errors={fieldErrors} />
-                </FieldContent>
-              </Field>
-            )
-          }
+            if (field.field === FieldType.Input) {
+              const Input = fieldTypeComponentMap[FieldType.Input]
+              return (
+                <Input
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  mask={field.mask}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
-          if (field.field === FieldType.Textarea) {
-            const Textarea = fieldTypeComponentMap[FieldType.Textarea]
-            return (
-              <Field key={fieldId}>
-                <FieldLabel htmlFor={fieldId}>{field.label}</FieldLabel>
-                <FieldContent>
-                  <Textarea
-                    id={fieldId}
-                    placeholder={field.placeholder}
-                    aria-invalid={!!fieldErrors?.length}
-                    {...register(fieldName, registerOptions)}
-                  />
-                  <FieldError errors={fieldErrors} />
-                </FieldContent>
-              </Field>
-            )
-          }
+            if (field.field === FieldType.Textarea) {
+              const Textarea = fieldTypeComponentMap[FieldType.Textarea]
+              return (
+                <Textarea
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  placeholder={field.placeholder}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
-          if (field.field === FieldType.Select) {
-            const Select = fieldTypeComponentMap[FieldType.Select]
-            return (
-              <Field key={fieldId}>
-                <FieldLabel htmlFor={fieldId}>{field.label}</FieldLabel>
-                <FieldContent>
-                  <Select
-                    id={fieldId}
-                    defaultValue={field.defaultValue}
-                    aria-invalid={!!fieldErrors?.length}
-                    {...register(fieldName, registerOptions)}
-                  >
-                    {field.options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </Select>
-                  <FieldError errors={fieldErrors} />
-                </FieldContent>
-              </Field>
-            )
-          }
+            if (field.field === FieldType.Select) {
+              const Select = fieldTypeComponentMap[FieldType.Select]
+              return (
+                <Select
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  options={field.options}
+                  defaultValue={field.defaultValue}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
-          if (field.field === FieldType.Checkbox) {
-            const Checkbox = fieldTypeComponentMap[FieldType.Checkbox]
-            return (
-              <Field key={fieldId}>
-                <FieldLabel className="flex items-center gap-2" htmlFor={fieldId}>
-                  <Checkbox
-                    id={fieldId}
-                    defaultChecked={field.defaultValue}
-                    aria-invalid={!!fieldErrors?.length}
-                    {...register(fieldName, registerOptions)}
-                  />
-                  {field.label}
-                </FieldLabel>
-                <FieldError errors={fieldErrors} />
-              </Field>
-            )
-          }
+            if (field.field === FieldType.Checkbox) {
+              const Checkbox = fieldTypeComponentMap[FieldType.Checkbox]
+              return (
+                <Checkbox
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  defaultChecked={field.defaultValue}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
-          if (field.field === FieldType.Switch) {
-            const Switch = fieldTypeComponentMap[FieldType.Switch]
-            return (
-              <Field key={fieldId}>
-                <FieldLabel className="flex items-center gap-2" htmlFor={fieldId}>
-                  <Switch
-                    id={fieldId}
-                    defaultChecked={field.defaultValue}
-                    aria-invalid={!!fieldErrors?.length}
-                    {...register(fieldName, registerOptions)}
-                  />
-                  {field.label}
-                </FieldLabel>
-                <FieldError errors={fieldErrors} />
-              </Field>
-            )
-          }
+            if (field.field === FieldType.Switch) {
+              const Switch = fieldTypeComponentMap[FieldType.Switch]
+              return (
+                <Switch
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  defaultChecked={field.defaultValue}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
-          if (field.field === FieldType.Radio) {
-            const Radio = fieldTypeComponentMap[FieldType.Radio]
-            return (
-              <FieldSet key={fieldId}>
-                <FieldLegend>{field.label}</FieldLegend>
-                <FieldGroup data-slot="radio-group">
-                  {field.options.map((option) => {
-                    const optionId = `${fieldId}-${option.value}`
-                    return (
-                      <Field key={optionId} orientation="horizontal">
-                        <FieldLabel
-                          className="flex items-center gap-2"
-                          htmlFor={optionId}
-                        >
-                          <Radio
-                            id={optionId}
-                            value={option.value}
-                            defaultChecked={field.defaultValue === option.value}
-                            aria-invalid={!!fieldErrors?.length}
-                            {...register(fieldName, registerOptions)}
-                          />
-                          {option.label}
-                        </FieldLabel>
-                      </Field>
-                    )
-                  })}
-                </FieldGroup>
-                <FieldError errors={fieldErrors} />
-              </FieldSet>
-            )
-          }
+            if (field.field === FieldType.Radio) {
+              const Radio = fieldTypeComponentMap[FieldType.Radio]
+              return (
+                <Radio
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  options={field.options}
+                  defaultValue={field.defaultValue}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
-          if (field.field === FieldType.Button) {
-            const Button = fieldTypeComponentMap[FieldType.Button]
-            return (
-              <Button key={fieldId} name={field.name} type="submit">
-                {field.label}
-              </Button>
-            )
-          }
+            if (field.field === FieldType.Button) {
+              const Button = fieldTypeComponentMap[FieldType.Button]
+              return (
+                <Button key={fieldId} name={field.name} label={field.label} />
+              )
+            }
 
-          return null
-        })}
-      </FieldGroup>
-    </form>
+            return null
+          })}
+        </FieldGroup>
+      </form>
+    </FormProvider>
   )
 }

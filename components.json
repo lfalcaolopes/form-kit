@@ -14,7 +14,7 @@
   "aliases": {
     "components": "@/form-kit/components",
     "utils": "@/form-kit/utils",
-    "ui": "@/form-kit/components/ui",
+    "ui": "@/form-kit/components/units",
     "lib": "@/form-kit",
     "hooks": "@/form-kit/hooks"
   },
