@@ -1,8 +1,4 @@
-import {
-  useController,
-  useFormContext,
-  type RegisterOptions,
-} from 'react-hook-form'
+import { useFormContext, type RegisterOptions } from 'react-hook-form'
 
 import { Checkbox } from '@/form-kit/components/units/checkbox'
 import {
@@ -29,25 +25,17 @@ export function CheckboxField({
   rules,
   errors,
 }: CheckboxFieldProps) {
-  const { control } = useFormContext()
-  const { field } = useController({
-    name,
-    control,
-    rules,
-    defaultValue: defaultChecked ?? false,
-  })
+  const { register } = useFormContext()
+  const registration = register(name, rules)
 
   return (
     <Field>
       <FieldLabel className="flex items-center gap-2" htmlFor={fieldId}>
         <Checkbox
           id={fieldId}
-          name={field.name}
-          checked={!!field.value}
-          onChange={field.onChange}
-          onBlur={field.onBlur}
-          ref={field.ref}
+          defaultChecked={defaultChecked}
           aria-invalid={!!errors?.length}
+          {...registration}
         />
         {label}
       </FieldLabel>
