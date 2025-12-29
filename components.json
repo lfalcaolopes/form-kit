@@ -12,11 +12,11 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@/form-kit/components",
-    "utils": "@/form-kit/utils",
-    "ui": "@/form-kit/components/units",
-    "lib": "@/form-kit",
-    "hooks": "@/form-kit/hooks"
+    "components": "@/formKit/components",
+    "utils": "@/formKit/utils",
+    "ui": "@/formKit/components/units",
+    "lib": "@/formKit",
+    "hooks": "@/formKit/hooks"
   },
   "registries": {
     "@acme": "https://acme.com/r/{name}.json"

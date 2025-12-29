@@ -4,7 +4,7 @@ import {
   type RegisterOptions,
 } from 'react-hook-form'
 
-import { Radio } from '@/form-kit/components/units/radio'
+import { Radio } from '@/formKit/components/units/radio'
 import {
   Field,
   FieldError,
@@ -12,11 +12,11 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from '@/form-kit/components/fields/Field'
+} from '@/formKit/components/fields/Field'
 import type {
   FieldErrorMessage,
   FieldOption,
-} from '@/form-kit/components/fields/types'
+} from '@/formKit/components/fields/types'
 
 export type RadioFieldProps = {
   fieldId: string

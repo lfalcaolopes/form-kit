@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 
-import { cn } from '@/form-kit/utils/index'
+import { cn } from '@/formKit/utils/index'
 
 function Button({
   className,

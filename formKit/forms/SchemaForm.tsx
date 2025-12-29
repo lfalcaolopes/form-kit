@@ -14,8 +14,8 @@ import {
   fieldTypeComponentMap,
   type FormFieldConfig,
   type FormSchema,
-} from '@/form-kit/schema'
-import { FieldGroup } from '@/form-kit/components/fields/Field'
+} from '@/formKit/schema'
+import { FieldGroup } from '@/formKit/components/fields/Field'
 
 type FieldValue<TField extends FormFieldConfig> =
   TField extends { field: typeof FieldType.Input }

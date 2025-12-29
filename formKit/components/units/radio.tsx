@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cn } from '@/form-kit/utils/index'
+import { cn } from '@/formKit/utils/index'
 
 const Radio = React.forwardRef<
   HTMLInputElement,

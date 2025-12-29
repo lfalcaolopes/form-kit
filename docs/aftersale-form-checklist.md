@@ -1,6 +1,6 @@
 # Aftersale Form Feature Checklist
 
-Based on `docs/aftersale-form.md` versus what is currently implemented in `form-kit/`.
+Based on `docs/aftersale-form.md` versus what is currently implemented in `formKit/`.
 
 ## Core Form Behavior
 - [x] Schema-driven form rendering

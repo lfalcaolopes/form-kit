@@ -1,4 +1,4 @@
-import { Button } from '@/form-kit/components/units/button'
+import { Button } from '@/formKit/components/units/button'
 
 export type ButtonFieldProps = {
   name: string

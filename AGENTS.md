@@ -1,10 +1,10 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- All reusable form-kit code must live inside `form-kit/` so it can be copied or added via git subtree.
-- Keep `form-kit/` modular: `form-kit/components/` for UI primitives, `form-kit/schema/` for config types, `form-kit/forms/` for generators, and `form-kit/utils/` for helpers.
+- All reusable formKit code must live inside `formKit/` so it can be copied or added via git subtree.
+- Keep `formKit/` modular: `formKit/components/` for UI primitives, `formKit/schema/` for config types, `formKit/forms/` for generators, and `formKit/utils/` for helpers.
 - `src/` stays as the demo or host app, with `src/main.tsx` and `src/App.tsx` wiring up examples.
-- Styles should be colocated with the owning module; shared styles can live in `form-kit/styles/`.
+- Styles should be colocated with the owning module; shared styles can live in `formKit/styles/`.
 - Public, unprocessed files are in `public/` (for example `public/vite.svg`).
 - Build output is generated into `dist/` (ignored by ESLint and should not be committed).
 
@@ -25,7 +25,7 @@
 ## Testing Guidelines
 - Jest is the chosen test runner. Use it to test configuration parsing, field rendering decisions, and validation integration.
 - Prefer use-case driven tests (for example "renders required email field with error message") over snapshot-only tests.
-- Do not place tests inside `form-kit/`; keep them in `src/` or a top-level `tests/` folder (for example `tests/form-kit/renderer.test.tsx`).
+- Do not place tests inside `formKit/`; keep them in `src/` or a top-level `tests/` folder (for example `tests/formKit/renderer.test.tsx`).
 
 ## Commit & Pull Request Guidelines
 - Use Conventional Commits (for example `feat: add schema-driven select`, `fix: handle empty options`).
@@ -36,6 +36,6 @@
 - If you add new environment variables, document them in `README.md` and use the `VITE_` prefix.
 
 ## Architecture Overview
-- The goal is a reusable internal form-kit for React: schema-driven forms powered by React Hook Form, validation via Zod, and consistent UI with shadcn/ui + Tailwind.
-- Keep modules free of app-specific routing, stores, or services; everything in `form-kit/` must be portable.
+- The goal is a reusable internal formKit for React: schema-driven forms powered by React Hook Form, validation via Zod, and consistent UI with shadcn/ui + Tailwind.
+- Keep modules free of app-specific routing, stores, or services; everything in `formKit/` must be portable.
 - Provide minimal documentation on integrating the kit and extending components.

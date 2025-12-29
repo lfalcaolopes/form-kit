@@ -1,36 +1,31 @@
-import type { HTMLInputTypeAttribute } from 'react'
 import { useFormContext, type RegisterOptions } from 'react-hook-form'
 
-import { Input } from '@/form-kit/components/units/input'
+import { Textarea } from '@/formKit/components/units/textarea'
 import {
   Field,
   FieldContent,
   FieldError,
   FieldLabel,
-} from '@/form-kit/components/fields/Field'
-import type { FieldErrorMessage } from '@/form-kit/components/fields/types'
+} from '@/formKit/components/fields/Field'
+import type { FieldErrorMessage } from '@/formKit/components/fields/types'
 
-export type InputFieldProps = {
+export type TextareaFieldProps = {
   fieldId: string
   label: string
   name: string
-  type?: HTMLInputTypeAttribute
   placeholder?: string
-  mask?: string
   rules?: RegisterOptions
   errors?: FieldErrorMessage
 }
 
-export function InputField({
+export function TextareaField({
   fieldId,
   label,
   name,
-  type,
   placeholder,
-  mask,
   rules,
   errors,
-}: InputFieldProps) {
+}: TextareaFieldProps) {
   const { register } = useFormContext()
   const registration = register(name, rules)
 
@@ -38,11 +33,9 @@ export function InputField({
     <Field>
       <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>
       <FieldContent>
-        <Input
+        <Textarea
           id={fieldId}
-          type={type}
           placeholder={placeholder}
-          data-mask={mask}
           aria-invalid={!!errors?.length}
           {...registration}
         />

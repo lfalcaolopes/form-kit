@@ -1,5 +1,5 @@
-import { SchemaForm } from '../form-kit/forms'
-import { FieldType, type FormSchema } from '../form-kit/schema'
+import { SchemaForm } from '../formKit/forms'
+import { FieldType, type FormSchema } from '../formKit/schema'
 
 const demoSchema: FormSchema = {
   fullName: {

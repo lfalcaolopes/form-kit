@@ -1,16 +1,16 @@
 import { useFormContext, type RegisterOptions } from 'react-hook-form'
 
-import { Select } from '@/form-kit/components/units/select'
+import { Select } from '@/formKit/components/units/select'
 import {
   Field,
   FieldContent,
   FieldError,
   FieldLabel,
-} from '@/form-kit/components/fields/Field'
+} from '@/formKit/components/fields/Field'
 import type {
   FieldErrorMessage,
   FieldOption,
-} from '@/form-kit/components/fields/types'
+} from '@/formKit/components/fields/types'
 
 export type SelectFieldProps = {
   fieldId: string

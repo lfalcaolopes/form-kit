@@ -1,14 +1,14 @@
 import { useFormContext, type RegisterOptions } from 'react-hook-form'
 
-import { Checkbox } from '@/form-kit/components/units/checkbox'
+import { Switch } from '@/formKit/components/units/switch'
 import {
   Field,
   FieldError,
   FieldLabel,
-} from '@/form-kit/components/fields/Field'
-import type { FieldErrorMessage } from '@/form-kit/components/fields/types'
+} from '@/formKit/components/fields/Field'
+import type { FieldErrorMessage } from '@/formKit/components/fields/types'
 
-export type CheckboxFieldProps = {
+export type SwitchFieldProps = {
   fieldId: string
   label: string
   name: string
@@ -17,21 +17,21 @@ export type CheckboxFieldProps = {
   errors?: FieldErrorMessage
 }
 
-export function CheckboxField({
+export function SwitchField({
   fieldId,
   label,
   name,
   defaultChecked,
   rules,
   errors,
-}: CheckboxFieldProps) {
+}: SwitchFieldProps) {
   const { register } = useFormContext()
   const registration = register(name, rules)
 
   return (
     <Field>
       <FieldLabel className="flex items-center gap-2" htmlFor={fieldId}>
-        <Checkbox
+        <Switch
           id={fieldId}
           defaultChecked={defaultChecked}
           aria-invalid={!!errors?.length}
