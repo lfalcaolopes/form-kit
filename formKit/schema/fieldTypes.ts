@@ -1,10 +1,11 @@
 import type { ComponentProps, ComponentType } from 'react'
 
 import { ButtonField } from '../components/fields/ButtonField'
-import { CheckboxField } from '../components/fields/CheckboxField'
+import { CheckboxGroupField } from '../components/fields/CheckboxGroupField'
 import { InputField } from '../components/fields/InputField'
 import { RadioField } from '../components/fields/RadioField'
 import { SelectField } from '../components/fields/SelectField'
+import { SingleCheckboxField } from '../components/fields/SingleCheckboxField'
 import { SwitchField } from '../components/fields/SwitchField'
 import { TextareaField } from '../components/fields/TextareaField'
 
@@ -13,6 +14,7 @@ export const FieldType = {
   Textarea: 'textarea',
   Select: 'select',
   Checkbox: 'checkbox',
+  SingleCheckbox: 'singleCheckbox',
   Radio: 'radio',
   Switch: 'switch',
   Button: 'button',
@@ -24,7 +26,8 @@ type FieldComponentProps = {
   [FieldType.Input]: ComponentProps<typeof InputField>
   [FieldType.Textarea]: ComponentProps<typeof TextareaField>
   [FieldType.Select]: ComponentProps<typeof SelectField>
-  [FieldType.Checkbox]: ComponentProps<typeof CheckboxField>
+  [FieldType.Checkbox]: ComponentProps<typeof CheckboxGroupField>
+  [FieldType.SingleCheckbox]: ComponentProps<typeof SingleCheckboxField>
   [FieldType.Radio]: ComponentProps<typeof RadioField>
   [FieldType.Switch]: ComponentProps<typeof SwitchField>
   [FieldType.Button]: ComponentProps<typeof ButtonField>
@@ -36,7 +39,8 @@ export const fieldTypeComponentMap: {
   [FieldType.Input]: InputField,
   [FieldType.Textarea]: TextareaField,
   [FieldType.Select]: SelectField,
-  [FieldType.Checkbox]: CheckboxField,
+  [FieldType.Checkbox]: CheckboxGroupField,
+  [FieldType.SingleCheckbox]: SingleCheckboxField,
   [FieldType.Radio]: RadioField,
   [FieldType.Switch]: SwitchField,
   [FieldType.Button]: ButtonField,

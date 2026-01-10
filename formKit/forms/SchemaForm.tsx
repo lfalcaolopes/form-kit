@@ -25,12 +25,14 @@ type FieldValue<TField extends FormFieldConfig> =
       : TField extends { field: typeof FieldType.Select }
         ? string
         : TField extends { field: typeof FieldType.Checkbox }
-          ? boolean
-          : TField extends { field: typeof FieldType.Switch }
+          ? string[]
+          : TField extends { field: typeof FieldType.SingleCheckbox }
             ? boolean
-            : TField extends { field: typeof FieldType.Radio }
-              ? string
-              : never
+            : TField extends { field: typeof FieldType.Switch }
+              ? boolean
+              : TField extends { field: typeof FieldType.Radio }
+                ? string
+                : never
 
 type FormValues<TSchema extends FormSchema> = FieldValues & {
   [K in keyof TSchema]: FieldValue<TSchema[K]>
@@ -152,6 +154,23 @@ export function SchemaForm<TSchema extends FormSchema>({
               const Checkbox = fieldTypeComponentMap[FieldType.Checkbox]
               return (
                 <Checkbox
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  options={field.options}
+                  defaultValue={field.defaultValue}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
+
+            if (field.field === FieldType.SingleCheckbox) {
+              const SingleCheckbox =
+                fieldTypeComponentMap[FieldType.SingleCheckbox]
+              return (
+                <SingleCheckbox
                   key={fieldId}
                   fieldId={fieldId}
                   name={fieldName}

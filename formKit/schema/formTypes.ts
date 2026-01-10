@@ -33,12 +33,17 @@ type SelectFieldConfig = BaseFieldConfig<string> & {
   options: SelectOption[]
 }
 
-type CheckboxFieldConfig = BaseFieldConfig<boolean> & {
+type CheckboxFieldConfig = BaseFieldConfig<string[]> & {
   field: typeof FieldType.Checkbox
+  options: SelectOption[]
 }
 
 type SwitchFieldConfig = BaseFieldConfig<boolean> & {
   field: typeof FieldType.Switch
+}
+
+type SingleCheckboxFieldConfig = BaseFieldConfig<boolean> & {
+  field: typeof FieldType.SingleCheckbox
 }
 
 type RadioFieldConfig = BaseFieldConfig<string> & {
@@ -55,6 +60,7 @@ export type FormFieldConfig =
   | TextareaFieldConfig
   | SelectFieldConfig
   | CheckboxFieldConfig
+  | SingleCheckboxFieldConfig
   | SwitchFieldConfig
   | RadioFieldConfig
   | ButtonFieldConfig

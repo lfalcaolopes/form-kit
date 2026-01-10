@@ -8,7 +8,7 @@ import {
 } from '@/formKit/components/fields/Field'
 import type { FieldErrorMessage } from '@/formKit/components/fields/types'
 
-export type CheckboxFieldProps = {
+export type SingleCheckboxFieldProps = {
   fieldId: string
   label: string
   name: string
@@ -17,14 +17,14 @@ export type CheckboxFieldProps = {
   errors?: FieldErrorMessage
 }
 
-export function CheckboxField({
+export function SingleCheckboxField({
   fieldId,
   label,
   name,
   defaultChecked,
   rules,
   errors,
-}: CheckboxFieldProps) {
+}: SingleCheckboxFieldProps) {
   const { register } = useFormContext()
   const registration = register(name, rules)
 
