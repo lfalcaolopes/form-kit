@@ -9,7 +9,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] Custom onSubmit handler
 - [x] Form wrapper className prop
 - [x] Form title and form info props
-- [ ] Before/after save hooks (onBeforeSave/onAfterSave)
+- [x] Before/after save hooks (onBeforeSave/onAfterSave)
 - [ ] Transform data before submit
 - [ ] Permission-aware props (hasPermission - a function that returns a boolean)
 
@@ -26,7 +26,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] Switch (boolean)
 - [x] Submit button field
 - [ ] Secret text field type
-- [ ] Checkbox group (multiple options)
+- [x] Checkbox group (multiple options)
 - [ ] Custom component field (a way to manage custom single use components)
 
 - [ ] File upload

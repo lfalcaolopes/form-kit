@@ -62,10 +62,10 @@ const demoSchema: FormSchema = {
     label: 'Availability',
     field: FieldType.Checkbox,
     options: [
-      {label: 'Manhã', value: 'morning'},
-      {label: 'Tarde', value: 'afternoon'},
-      {label: 'Noite', value: 'night'},
-    ]
+      { label: 'Manhã', value: 'morning' },
+      { label: 'Tarde', value: 'afternoon' },
+      { label: 'Noite', value: 'night' },
+    ],
   },
   consent: {
     name: 'consent',
@@ -78,6 +78,19 @@ const demoSchema: FormSchema = {
     label: 'Submit application',
     field: FieldType.Button,
   },
+}
+
+const handleBeforeSave = ({ values }: { values: Record<string, unknown> }) => {
+  console.log('Before save', values)
+  return true
+}
+
+const handleSubmit = (values: Record<string, unknown>) => {
+  console.log('Submitted', values)
+}
+
+const handleAfterSave = ({ values }: { values: Record<string, unknown> }) => {
+  console.log('After save', values)
 }
 
 function App() {
@@ -101,9 +114,9 @@ function App() {
               className="space-y-6"
               title="Request intake form"
               formInfo="Share the essentials so we can route your request quickly."
-              onSubmit={(values) => {
-                console.log('Submitted', values)
-              }}
+              onBeforeSave={handleBeforeSave}
+              onSubmit={handleSubmit}
+              onAfterSave={handleAfterSave}
             />
           </div>
         </div>
