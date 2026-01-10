@@ -57,10 +57,20 @@ const demoSchema: FormSchema = {
       { label: 'Standard plan', value: 'standard' },
     ],
   },
+  availability: {
+    name: 'availability',
+    label: 'Availability',
+    field: FieldType.Checkbox,
+    options: [
+      {label: 'Manhã', value: 'morning'},
+      {label: 'Tarde', value: 'afternoon'},
+      {label: 'Noite', value: 'night'},
+    ]
+  },
   consent: {
     name: 'consent',
     label: 'I agree to receive updates',
-    field: FieldType.Checkbox,
+    field: FieldType.SingleCheckbox,
     rules: { required: 'Please opt in to continue' },
   },
   submit: {
