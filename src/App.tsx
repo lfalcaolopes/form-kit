@@ -1,11 +1,11 @@
 import { SchemaForm } from '../formKit/forms'
 import {
+  defineFormSchema,
   FieldType,
-  type FormSchema,
   type FormValuesFromSchema,
 } from '../formKit/schema'
 
-const demoSchema: FormSchema = {
+const demoSchema = defineFormSchema({
   fullName: {
     name: 'fullName',
     label: 'Full name',
@@ -82,7 +82,7 @@ const demoSchema: FormSchema = {
     label: 'Submit application',
     field: FieldType.Button,
   },
-}
+})
 
 type DemoValues = FormValuesFromSchema<typeof demoSchema>
 

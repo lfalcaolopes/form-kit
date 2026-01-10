@@ -88,3 +88,7 @@ type FieldValueFromConfig<TField extends FormFieldConfig> =
 export type FormValuesFromSchema<TSchema extends FormSchema> = {
   [K in keyof TSchema]: FieldValueFromConfig<TSchema[K]>
 }
+
+export const defineFormSchema = <TSchema extends FormSchema>(
+  schema: TSchema,
+) => schema
