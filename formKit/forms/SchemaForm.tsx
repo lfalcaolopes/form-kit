@@ -2,6 +2,7 @@ import { useId, useMemo, type ReactNode } from 'react'
 import {
   FormProvider,
   useForm,
+  type UseFormReturn,
   type DefaultValues,
   type FieldError as RHFFieldError,
   type FieldErrors,
@@ -41,11 +42,20 @@ type FormValues<TSchema extends FormSchema> = FieldValues & {
 
 type SchemaFormProps<TSchema extends FormSchema> = {
   schema: TSchema
-  onSubmit: (values: FormValues<TSchema>) => void
+  onSubmit: (values: FormValues<TSchema>) => void | Promise<void>
+  onBeforeSave?: (
+    args: SchemaFormHookArgs<TSchema>,
+  ) => boolean | void | Promise<boolean | void>
+  onAfterSave?: (args: SchemaFormHookArgs<TSchema>) => void | Promise<void>
   className?: string
   formId?: string
   title?: string
   formInfo?: ReactNode
+}
+
+type SchemaFormHookArgs<TSchema extends FormSchema> = {
+  values: FormValues<TSchema>
+  methods: UseFormReturn<FormValues<TSchema>>
 }
 
 function getFieldErrors<TSchema extends FormSchema>(
@@ -65,6 +75,8 @@ function getFieldErrors<TSchema extends FormSchema>(
 export function SchemaForm<TSchema extends FormSchema>({
   schema,
   onSubmit,
+  onBeforeSave,
+  onAfterSave,
   className,
   formId,
   title,
@@ -93,12 +105,26 @@ export function SchemaForm<TSchema extends FormSchema>({
   } = form
 
   const fields = Object.values(schema)
+  const handleFormSubmit = async (values: FormValues<TSchema>) => {
+    if (onBeforeSave) {
+      const shouldContinue = await onBeforeSave({ values, methods: form })
+      if (shouldContinue === false) {
+        return
+      }
+    }
+
+    await onSubmit(values)
+
+    if (onAfterSave) {
+      await onAfterSave({ values, methods: form })
+    }
+  }
 
   return (
     <FormProvider {...form}>
       <form
         className={className}
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleFormSubmit)}
         noValidate
       >
         <FormHeader title={title} info={formInfo} />
