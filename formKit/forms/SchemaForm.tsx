@@ -36,6 +36,7 @@ type SchemaFormProps<TSchema extends FormSchema> = {
   formId?: string
   title?: string
   formInfo?: ReactNode
+  hasPermission?: (permission: string) => boolean
 }
 
 type SchemaFormHookArgs<TSchema extends FormSchema> = {
@@ -67,6 +68,7 @@ export function SchemaForm<TSchema extends FormSchema>({
   formId,
   title,
   formInfo,
+  hasPermission,
 }: SchemaFormProps<TSchema>) {
   const fallbackId = useId()
   const baseId = formId ?? fallbackId
@@ -123,6 +125,13 @@ export function SchemaForm<TSchema extends FormSchema>({
         <FormHeader title={title} info={formInfo} />
         <FieldGroup>
           {fields.map((field) => {
+            if (field.permission && hasPermission) {
+              const canRender = hasPermission(field.permission)
+              if (!canRender) {
+                return null
+              }
+            }
+
             const fieldName = field.name as Path<FormValues<TSchema>>
             const fieldId = `${baseId}-${field.name}`
             const fieldErrors = getFieldErrors(errors, fieldName)

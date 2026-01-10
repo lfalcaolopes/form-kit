@@ -20,6 +20,7 @@ type BaseFieldConfig<TValue> = {
   label: string
   defaultValue?: TValue
   rules?: RegisterOptions
+  permission?: string
 }
 
 type InputFieldConfig = BaseFieldConfig<string | number> & {

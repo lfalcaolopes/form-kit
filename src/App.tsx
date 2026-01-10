@@ -65,6 +65,7 @@ const demoSchema = defineFormSchema({
     name: 'availability',
     label: 'Availability',
     field: FieldType.Checkbox,
+    permission: 'form:availability:edit',
     options: [
       { label: 'Manhã', value: 'morning' },
       { label: 'Tarde', value: 'afternoon' },
@@ -81,6 +82,7 @@ const demoSchema = defineFormSchema({
     name: 'submit',
     label: 'Submit application',
     field: FieldType.Button,
+    permission: 'form:submit',
   },
 })
 
@@ -110,6 +112,9 @@ const transformBeforeFormSubmit = ({ values }: { values: DemoValues }) => {
   return nextValues
 }
 
+const userPermissions = new Set(['form:edit', 'form:submit'])
+const hasPermission = (permission: string) => userPermissions.has(permission)
+
 function App() {
   return (
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
@@ -135,6 +140,7 @@ function App() {
               transformBeforeFormSubmit={transformBeforeFormSubmit}
               onSubmit={handleSubmit}
               onAfterSave={handleAfterSave}
+              hasPermission={hasPermission}
             />
           </div>
         </div>
