@@ -66,24 +66,3 @@ export type FormFieldConfig =
   | ButtonFieldConfig
 
 export type FormSchema = Record<string, FormFieldConfig>
-
-export type FieldValue<TField extends FormFieldConfig> =
-  TField extends { field: typeof FieldType.Input }
-    ? string | number
-    : TField extends { field: typeof FieldType.Textarea }
-      ? string
-      : TField extends { field: typeof FieldType.Select }
-        ? string
-        : TField extends { field: typeof FieldType.Checkbox }
-          ? string[]
-          : TField extends { field: typeof FieldType.SingleCheckbox }
-            ? boolean
-            : TField extends { field: typeof FieldType.Switch }
-              ? boolean
-              : TField extends { field: typeof FieldType.Radio }
-                ? string
-                : never
-
-export type FormValues<TSchema extends FormSchema> = {
-  [K in keyof TSchema]: FieldValue<TSchema[K]>
-}
