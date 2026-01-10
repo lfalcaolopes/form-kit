@@ -8,7 +8,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] Per-field default values in schema
 - [x] Custom onSubmit handler
 - [x] Form wrapper className prop
-- [ ] Form title and form info props
+- [x] Form title and form info props
 - [ ] Before/after save hooks (onBeforeSave/onAfterSave)
 - [ ] Transform data before submit
 - [ ] Permission-aware props (hasPermission - a function that returns a boolean)
