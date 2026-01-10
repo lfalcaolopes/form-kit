@@ -1,5 +1,9 @@
 import { SchemaForm } from '../formKit/forms'
-import { FieldType, type FormSchema } from '../formKit/schema'
+import {
+  FieldType,
+  type FormSchema,
+  type FormValuesFromSchema,
+} from '../formKit/schema'
 
 const demoSchema: FormSchema = {
   fullName: {
@@ -80,20 +84,22 @@ const demoSchema: FormSchema = {
   },
 }
 
-const handleBeforeSave = ({ values }: { values: Record<string, unknown> }) => {
+type DemoValues = FormValuesFromSchema<typeof demoSchema>
+
+const handleBeforeSave = ({ values }: { values: DemoValues }) => {
   console.log('Before save', values)
   return true
 }
 
-const handleSubmit = (values: Record<string, unknown>) => {
+const handleSubmit = (values: DemoValues) => {
   console.log('Submitted', values)
 }
 
-const handleAfterSave = ({ values }: { values: Record<string, unknown> }) => {
+const handleAfterSave = ({ values }: { values: DemoValues }) => {
   console.log('After save', values)
 }
 
-const transformBeforeFormSubmit = ({ values }: { values: Record<string, unknown> }) => {
+const transformBeforeFormSubmit = ({ values }: { values: DemoValues }) => {
   const nextValues = { ...values }
   if (typeof nextValues.fullName === 'string') {
     nextValues.fullName = nextValues.fullName.trim()

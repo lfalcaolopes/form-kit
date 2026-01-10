@@ -13,32 +13,14 @@ import {
 import {
   FieldType,
   fieldTypeComponentMap,
-  type FormFieldConfig,
   type FormSchema,
+  type FormValuesFromSchema,
 } from '@/formKit/schema'
 import { FieldGroup } from '@/formKit/components/fields/Field'
 import { FormHeader } from '@/formKit/components/blocks/formHeader'
 
-type FieldValue<TField extends FormFieldConfig> =
-  TField extends { field: typeof FieldType.Input }
-    ? string | number
-    : TField extends { field: typeof FieldType.Textarea }
-      ? string
-      : TField extends { field: typeof FieldType.Select }
-        ? string
-        : TField extends { field: typeof FieldType.Checkbox }
-          ? string[]
-          : TField extends { field: typeof FieldType.SingleCheckbox }
-            ? boolean
-            : TField extends { field: typeof FieldType.Switch }
-              ? boolean
-              : TField extends { field: typeof FieldType.Radio }
-                ? string
-                : never
-
-type FormValues<TSchema extends FormSchema> = FieldValues & {
-  [K in keyof TSchema]: FieldValue<TSchema[K]>
-}
+type FormValues<TSchema extends FormSchema> = FieldValues &
+  FormValuesFromSchema<TSchema>
 
 type SchemaFormProps<TSchema extends FormSchema> = {
   schema: TSchema

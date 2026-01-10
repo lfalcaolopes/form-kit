@@ -3,6 +3,17 @@ import type { RegisterOptions } from 'react-hook-form'
 
 import { FieldType } from './fieldTypes'
 
+type FieldValueByType = {
+  [FieldType.Input]: string
+  [FieldType.Textarea]: string
+  [FieldType.Select]: string
+  [FieldType.Checkbox]: string[]
+  [FieldType.SingleCheckbox]: boolean
+  [FieldType.Radio]: string
+  [FieldType.Switch]: boolean
+  [FieldType.Button]: never
+}
+
 type BaseFieldConfig<TValue> = {
   name: string
   field: FieldType
@@ -66,3 +77,14 @@ export type FormFieldConfig =
   | ButtonFieldConfig
 
 export type FormSchema = Record<string, FormFieldConfig>
+
+type FieldValueFromConfig<TField extends FormFieldConfig> =
+  TField extends { field: infer TFieldType }
+    ? TFieldType extends keyof FieldValueByType
+      ? FieldValueByType[TFieldType]
+      : never
+    : never
+
+export type FormValuesFromSchema<TSchema extends FormSchema> = {
+  [K in keyof TSchema]: FieldValueFromConfig<TSchema[K]>
+}
