@@ -43,6 +43,9 @@ type FormValues<TSchema extends FormSchema> = FieldValues & {
 type SchemaFormProps<TSchema extends FormSchema> = {
   schema: TSchema
   onSubmit: (values: FormValues<TSchema>) => void | Promise<void>
+  transformBeforeFormSubmit?: (
+    args: SchemaFormHookArgs<TSchema>,
+  ) => FormValues<TSchema> | Promise<FormValues<TSchema>>
   onBeforeSave?: (
     args: SchemaFormHookArgs<TSchema>,
   ) => boolean | void | Promise<boolean | void>
@@ -75,6 +78,7 @@ function getFieldErrors<TSchema extends FormSchema>(
 export function SchemaForm<TSchema extends FormSchema>({
   schema,
   onSubmit,
+  transformBeforeFormSubmit,
   onBeforeSave,
   onAfterSave,
   className,
@@ -106,17 +110,24 @@ export function SchemaForm<TSchema extends FormSchema>({
 
   const fields = Object.values(schema)
   const handleFormSubmit = async (values: FormValues<TSchema>) => {
+    const transformedValues = transformBeforeFormSubmit
+      ? await transformBeforeFormSubmit({ values, methods: form })
+      : values
+
     if (onBeforeSave) {
-      const shouldContinue = await onBeforeSave({ values, methods: form })
+      const shouldContinue = await onBeforeSave({
+        values: transformedValues,
+        methods: form,
+      })
       if (shouldContinue === false) {
         return
       }
     }
 
-    await onSubmit(values)
+    await onSubmit(transformedValues)
 
     if (onAfterSave) {
-      await onAfterSave({ values, methods: form })
+      await onAfterSave({ values: transformedValues, methods: form })
     }
   }
 

@@ -93,6 +93,17 @@ const handleAfterSave = ({ values }: { values: Record<string, unknown> }) => {
   console.log('After save', values)
 }
 
+const transformBeforeFormSubmit = ({ values }: { values: Record<string, unknown> }) => {
+  const nextValues = { ...values }
+  if (typeof nextValues.fullName === 'string') {
+    nextValues.fullName = nextValues.fullName.trim()
+  }
+  if (typeof nextValues.email === 'string') {
+    nextValues.email = nextValues.email.trim().toLowerCase()
+  }
+  return nextValues
+}
+
 function App() {
   return (
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
@@ -115,6 +126,7 @@ function App() {
               title="Request intake form"
               formInfo="Share the essentials so we can route your request quickly."
               onBeforeSave={handleBeforeSave}
+              transformBeforeFormSubmit={transformBeforeFormSubmit}
               onSubmit={handleSubmit}
               onAfterSave={handleAfterSave}
             />

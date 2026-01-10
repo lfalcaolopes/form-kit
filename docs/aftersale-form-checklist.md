@@ -10,7 +10,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] Form wrapper className prop
 - [x] Form title and form info props
 - [x] Before/after save hooks (onBeforeSave/onAfterSave)
-- [ ] Transform data before submit
+- [x] Transform data before submit
 - [ ] Permission-aware props (hasPermission - a function that returns a boolean)
 
 - [ ] Save bar behavior
