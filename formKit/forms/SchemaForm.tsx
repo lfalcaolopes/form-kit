@@ -1,4 +1,4 @@
-import { useId, useMemo } from 'react'
+import { useId, useMemo, type ReactNode } from 'react'
 import {
   FormProvider,
   useForm,
@@ -16,6 +16,7 @@ import {
   type FormSchema,
 } from '@/formKit/schema'
 import { FieldGroup } from '@/formKit/components/fields/Field'
+import { FormHeader } from '@/formKit/components/blocks/formHeader'
 
 type FieldValue<TField extends FormFieldConfig> =
   TField extends { field: typeof FieldType.Input }
@@ -43,6 +44,8 @@ type SchemaFormProps<TSchema extends FormSchema> = {
   onSubmit: (values: FormValues<TSchema>) => void
   className?: string
   formId?: string
+  title?: string
+  formInfo?: ReactNode
 }
 
 function getFieldErrors<TSchema extends FormSchema>(
@@ -64,6 +67,8 @@ export function SchemaForm<TSchema extends FormSchema>({
   onSubmit,
   className,
   formId,
+  title,
+  formInfo,
 }: SchemaFormProps<TSchema>) {
   const fallbackId = useId()
   const baseId = formId ?? fallbackId
@@ -96,6 +101,7 @@ export function SchemaForm<TSchema extends FormSchema>({
         onSubmit={handleSubmit(onSubmit)}
         noValidate
       >
+        <FormHeader title={title} info={formInfo} />
         <FieldGroup>
           {fields.map((field) => {
             const fieldName = field.name as Path<FormValues<TSchema>>

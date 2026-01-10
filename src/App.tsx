@@ -99,6 +99,8 @@ function App() {
             <SchemaForm
               schema={demoSchema}
               className="space-y-6"
+              title="Request intake form"
+              formInfo="Share the essentials so we can route your request quickly."
               onSubmit={(values) => {
                 console.log('Submitted', values)
               }}
