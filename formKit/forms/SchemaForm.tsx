@@ -114,6 +114,16 @@ export function SchemaForm<TSchema extends FormSchema>({
     }
   }
 
+  const resolveFieldOptions = (field: FormFieldConfig) => {
+    if ('getOptions' in field && field.getOptions) {
+      return field.getOptions({ values: watchedValues }) ?? field.options ?? []
+    }
+    if ('options' in field) {
+      return field.options ?? []
+    }
+    return []
+  }
+
   const fields = Object.values(schema)
   const handleFormSubmit = async (values: FormValues<TSchema>) => {
     const transformedValues = transformBeforeFormSubmit
@@ -232,6 +242,7 @@ export function SchemaForm<TSchema extends FormSchema>({
 
             if (field.field === FieldType.Select) {
               const Select = fieldTypeComponentMap[FieldType.Select]
+              const options = resolveFieldOptions(field)
               return (
                 <Select
                   key={fieldId}
@@ -242,7 +253,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   icon={field.icon}
                   readOnly={field.readOnly}
                   disabled={field.disabled}
-                  options={field.options}
+                  options={options}
                   defaultValue={field.defaultValue}
                   rules={fieldRules}
                   errors={fieldErrors}
@@ -252,6 +263,7 @@ export function SchemaForm<TSchema extends FormSchema>({
 
             if (field.field === FieldType.Checkbox) {
               const Checkbox = fieldTypeComponentMap[FieldType.Checkbox]
+              const options = resolveFieldOptions(field)
               return (
                 <Checkbox
                   key={fieldId}
@@ -262,7 +274,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   icon={field.icon}
                   readOnly={field.readOnly}
                   disabled={field.disabled}
-                  options={field.options}
+                  options={options}
                   defaultValue={field.defaultValue}
                   rules={fieldRules}
                   errors={fieldErrors}
@@ -311,6 +323,7 @@ export function SchemaForm<TSchema extends FormSchema>({
 
             if (field.field === FieldType.Radio) {
               const Radio = fieldTypeComponentMap[FieldType.Radio]
+              const options = resolveFieldOptions(field)
               return (
                 <Radio
                   key={fieldId}
@@ -321,7 +334,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   icon={field.icon}
                   readOnly={field.readOnly}
                   disabled={field.disabled}
-                  options={field.options}
+                  options={options}
                   defaultValue={field.defaultValue}
                   rules={fieldRules}
                   errors={fieldErrors}

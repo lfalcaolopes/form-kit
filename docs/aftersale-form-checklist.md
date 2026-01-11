@@ -48,7 +48,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] shouldHide (conditional rendering)
 - [x] getIsRequired (conditional required)
 - [ ] row / column layout metadata
-- [ ] dynamic options (getOptions)
+- [x] dynamic options (getOptions)
 - [ ] enum-backed options (use ENUM values to populate select options)
 - [ ] section headers (titleBefore/descriptionBefore)
 - [ ] custom components before/after fields

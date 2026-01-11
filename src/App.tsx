@@ -133,6 +133,23 @@ const demoSchema = defineFormSchema({
       { label: 'Standard plan', value: 'standard' },
     ],
   },
+  supportTier: {
+    name: 'supportTier',
+    label: 'Support tier',
+    field: FieldType.Select,
+    defaultValue: 'priority',
+    getOptions: ({ values }) =>
+      values.plan === 'premium'
+        ? [
+            { label: 'Priority support', value: 'priority' },
+            { label: 'Dedicated CSM', value: 'csm' },
+          ]
+        : [
+            { label: 'Standard support', value: 'standard' },
+            { label: 'Community only', value: 'community' },
+          ],
+    helpText: 'Options adjust to the selected plan.',
+  },
   availability: {
     name: 'availability',
     label: 'Availability',
@@ -219,6 +236,7 @@ const baseValues = {
   summary: 'Exploring a lightweight schema-driven setup.',
   role: 'designer',
   plan: 'premium',
+  supportTier: 'priority',
   availability: ['morning', 'night'],
   alerts: true,
   consent: true,

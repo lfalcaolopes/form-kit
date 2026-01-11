@@ -19,6 +19,8 @@ type FieldCondition = (args: {
   values: FieldValues
 }) => boolean
 
+type FieldOptionsResolver = (args: { values: FieldValues }) => SelectOption[]
+
 type BaseFieldConfig<TValue> = {
   name: string
   field: FieldType
@@ -60,12 +62,14 @@ type SelectOption = {
 
 type SelectFieldConfig = BaseFieldConfig<string> & {
   field: typeof FieldType.Select
-  options: SelectOption[]
+  options?: SelectOption[]
+  getOptions?: FieldOptionsResolver
 }
 
 type CheckboxFieldConfig = BaseFieldConfig<string[]> & {
   field: typeof FieldType.Checkbox
-  options: SelectOption[]
+  options?: SelectOption[]
+  getOptions?: FieldOptionsResolver
 }
 
 type SwitchFieldConfig = BaseFieldConfig<boolean> & {
@@ -78,7 +82,8 @@ type SingleCheckboxFieldConfig = BaseFieldConfig<boolean> & {
 
 type RadioFieldConfig = BaseFieldConfig<string> & {
   field: typeof FieldType.Radio
-  options: SelectOption[]
+  options?: SelectOption[]
+  getOptions?: FieldOptionsResolver
 }
 
 type ButtonFieldConfig = BaseFieldConfig<never> & {
