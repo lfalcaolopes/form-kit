@@ -1,5 +1,5 @@
 import type { HTMLInputTypeAttribute, ReactNode } from 'react'
-import type { RegisterOptions } from 'react-hook-form'
+import type { FieldValues, RegisterOptions } from 'react-hook-form'
 
 import { FieldType } from './fieldTypes'
 
@@ -15,6 +15,10 @@ type FieldValueByType = {
   [FieldType.Button]: never
 }
 
+type FieldCondition = (args: {
+  values: FieldValues
+}) => boolean
+
 type BaseFieldConfig<TValue> = {
   name: string
   field: FieldType
@@ -26,6 +30,8 @@ type BaseFieldConfig<TValue> = {
   defaultValue?: TValue
   rules?: RegisterOptions
   permission?: string
+  hidden?: boolean
+  shouldHide?: FieldCondition
 }
 
 type InputFieldConfig = BaseFieldConfig<string | number> & {

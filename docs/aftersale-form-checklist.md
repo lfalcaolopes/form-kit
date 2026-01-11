@@ -43,8 +43,8 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] helpText
 - [x] icon
 - [x] readOnly / disabled
-- [ ] hidden
-- [ ] shouldHide (conditional rendering)
+- [x] hidden
+- [x] shouldHide (conditional rendering)
 - [ ] getIsRequired (conditional required)
 - [ ] row / column layout metadata
 - [ ] dynamic options (getOptions)

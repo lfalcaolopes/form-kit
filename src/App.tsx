@@ -30,6 +30,13 @@ const demoSchema = defineFormSchema({
     readOnly: true,
     helpText: 'Generated after you submit the form.',
   },
+  internalTag: {
+    name: 'internalTag',
+    label: 'Internal tag',
+    field: FieldType.Input,
+    defaultValue: 'INT-448',
+    hidden: true,
+  },
   fullName: {
     name: 'fullName',
     label: 'Full name',
@@ -99,6 +106,20 @@ const demoSchema = defineFormSchema({
     field: FieldType.Switch,
     defaultValue: true,
     helpText: 'Notify me when the request status changes.',
+  },
+  followUp: {
+    name: 'followUp',
+    label: 'Needs follow-up',
+    field: FieldType.Switch,
+    defaultValue: false,
+    helpText: 'Reveal notes when follow-up is enabled.',
+  },
+  followUpNotes: {
+    name: 'followUpNotes',
+    label: 'Follow-up notes',
+    field: FieldType.Textarea,
+    placeholder: 'Add context for the team.',
+    shouldHide: ({ values }) => !values.followUp,
   },
   plan: {
     name: 'plan',

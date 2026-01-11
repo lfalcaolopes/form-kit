@@ -2,6 +2,7 @@ import { useId, useMemo, type ReactNode } from 'react'
 import {
   FormProvider,
   useForm,
+  useWatch,
   type UseFormReturn,
   type DefaultValues,
   type FieldError as RHFFieldError,
@@ -87,6 +88,7 @@ export function SchemaForm<TSchema extends FormSchema>({
   const form = useForm<FormValues<TSchema>>({
     defaultValues,
   })
+  const watchedValues = useWatch({ control: form.control }) as FormValues<TSchema>
   const {
     handleSubmit,
     formState: { errors },
@@ -125,6 +127,16 @@ export function SchemaForm<TSchema extends FormSchema>({
         <FormHeader title={title} info={formInfo} />
         <FieldGroup>
           {fields.map((field) => {
+            const shouldHide =
+              field.hidden ||
+              (field.shouldHide
+                ? field.shouldHide({ values: watchedValues })
+                : false)
+
+            if (shouldHide) {
+              return null
+            }
+
             if (field.permission && hasPermission) {
               const canRender = hasPermission(field.permission)
               if (!canRender) {
