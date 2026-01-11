@@ -11,6 +11,7 @@ import { TextareaField } from '../components/fields/TextareaField'
 
 export const FieldType = {
   Input: 'input',
+  SecretText: 'secretText',
   Textarea: 'textarea',
   Select: 'select',
   Checkbox: 'checkbox',
@@ -24,6 +25,7 @@ export type FieldType = typeof FieldType[keyof typeof FieldType]
 
 type FieldComponentProps = {
   [FieldType.Input]: ComponentProps<typeof InputField>
+  [FieldType.SecretText]: ComponentProps<typeof InputField>
   [FieldType.Textarea]: ComponentProps<typeof TextareaField>
   [FieldType.Select]: ComponentProps<typeof SelectField>
   [FieldType.Checkbox]: ComponentProps<typeof CheckboxGroupField>
@@ -37,6 +39,7 @@ export const fieldTypeComponentMap: {
   [K in FieldType]: ComponentType<FieldComponentProps[K]>
 } = {
   [FieldType.Input]: InputField,
+  [FieldType.SecretText]: InputField,
   [FieldType.Textarea]: TextareaField,
   [FieldType.Select]: SelectField,
   [FieldType.Checkbox]: CheckboxGroupField,

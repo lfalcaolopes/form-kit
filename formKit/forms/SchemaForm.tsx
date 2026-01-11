@@ -153,6 +153,23 @@ export function SchemaForm<TSchema extends FormSchema>({
               )
             }
 
+            if (field.field === FieldType.SecretText) {
+              const Input = fieldTypeComponentMap[FieldType.SecretText]
+              return (
+                <Input
+                  key={fieldId}
+                  fieldId={fieldId}
+                  name={fieldName}
+                  label={field.label}
+                  type="password"
+                  placeholder={field.placeholder}
+                  mask={field.mask}
+                  rules={field.rules}
+                  errors={fieldErrors}
+                />
+              )
+            }
+
             if (field.field === FieldType.Textarea) {
               const Textarea = fieldTypeComponentMap[FieldType.Textarea]
               return (

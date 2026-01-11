@@ -27,6 +27,13 @@ const demoSchema = defineFormSchema({
       },
     },
   },
+  accessKey: {
+    name: 'accessKey',
+    label: 'Access key',
+    field: FieldType.SecretText,
+    placeholder: 'Enter a secure access key',
+    rules: { required: 'Access key is required' },
+  },
   role: {
     name: 'role',
     label: 'Role',

@@ -5,6 +5,7 @@ import { FieldType } from './fieldTypes'
 
 type FieldValueByType = {
   [FieldType.Input]: string
+  [FieldType.SecretText]: string
   [FieldType.Textarea]: string
   [FieldType.Select]: string
   [FieldType.Checkbox]: string[]
@@ -26,6 +27,12 @@ type BaseFieldConfig<TValue> = {
 type InputFieldConfig = BaseFieldConfig<string | number> & {
   field: typeof FieldType.Input
   type?: HTMLInputTypeAttribute
+  placeholder?: string
+  mask?: string
+}
+
+type SecretTextFieldConfig = BaseFieldConfig<string> & {
+  field: typeof FieldType.SecretText
   placeholder?: string
   mask?: string
 }
@@ -69,6 +76,7 @@ type ButtonFieldConfig = BaseFieldConfig<never> & {
 
 export type FormFieldConfig =
   | InputFieldConfig
+  | SecretTextFieldConfig
   | TextareaFieldConfig
   | SelectFieldConfig
   | CheckboxFieldConfig
