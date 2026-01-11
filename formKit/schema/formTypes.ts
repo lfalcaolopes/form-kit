@@ -1,4 +1,4 @@
-import type { HTMLInputTypeAttribute } from 'react'
+import type { HTMLInputTypeAttribute, ReactNode } from 'react'
 import type { RegisterOptions } from 'react-hook-form'
 
 import { FieldType } from './fieldTypes'
@@ -19,6 +19,10 @@ type BaseFieldConfig<TValue> = {
   name: string
   field: FieldType
   label: string
+  helpText?: ReactNode
+  icon?: ReactNode
+  readOnly?: boolean
+  disabled?: boolean
   defaultValue?: TValue
   rules?: RegisterOptions
   permission?: string

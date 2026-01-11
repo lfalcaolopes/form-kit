@@ -1,12 +1,15 @@
-import { useFormContext, type RegisterOptions } from 'react-hook-form'
+import type { ReactNode } from 'react'
+import { useFormContext, useWatch, type RegisterOptions } from 'react-hook-form'
 
 import { Select } from '@/formKit/components/units/select'
 import {
   Field,
   FieldContent,
+  FieldDescription,
   FieldError,
   FieldLabel,
 } from '@/formKit/components/fields/Field'
+import { ReadOnlyField } from '@/formKit/components/fields/ReadOnlyField'
 import type {
   FieldErrorMessage,
   FieldOption,
@@ -16,6 +19,10 @@ export type SelectFieldProps = {
   fieldId: string
   label: string
   name: string
+  helpText?: ReactNode
+  icon?: ReactNode
+  readOnly?: boolean
+  disabled?: boolean
   options: FieldOption[]
   defaultValue?: string
   rules?: RegisterOptions
@@ -26,21 +33,44 @@ export function SelectField({
   fieldId,
   label,
   name,
+  helpText,
+  icon,
+  readOnly,
+  disabled,
   options,
   defaultValue,
   rules,
   errors,
 }: SelectFieldProps) {
-  const { register } = useFormContext()
+  const { register, control } = useFormContext()
   const registration = register(name, rules)
+  const value = useWatch({ control, name })
+  const resolvedValue = value ?? defaultValue
+  const selectedLabel =
+    options.find((option) => option.value === resolvedValue)?.label ?? ''
+
+  if (readOnly) {
+    return (
+      <ReadOnlyField
+        label={label}
+        value={selectedLabel}
+        helpText={helpText}
+        icon={icon}
+      />
+    )
+  }
 
   return (
-    <Field>
-      <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>
+    <Field data-disabled={disabled}>
+      <FieldLabel htmlFor={fieldId}>
+        {icon}
+        {label}
+      </FieldLabel>
       <FieldContent>
         <Select
           id={fieldId}
           defaultValue={defaultValue}
+          disabled={disabled}
           aria-invalid={!!errors?.length}
           {...registration}
         >
@@ -50,6 +80,7 @@ export function SelectField({
             </option>
           ))}
         </Select>
+        {helpText && <FieldDescription>{helpText}</FieldDescription>}
         <FieldError errors={errors} />
       </FieldContent>
     </Field>

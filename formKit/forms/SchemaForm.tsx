@@ -144,6 +144,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   type={field.type}
                   placeholder={field.placeholder}
                   mask={field.mask}
@@ -161,6 +165,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   type="password"
                   placeholder={field.placeholder}
                   mask={field.mask}
@@ -178,6 +186,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   placeholder={field.placeholder}
                   rules={field.rules}
                   errors={fieldErrors}
@@ -193,6 +205,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   options={field.options}
                   defaultValue={field.defaultValue}
                   rules={field.rules}
@@ -209,6 +225,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   options={field.options}
                   defaultValue={field.defaultValue}
                   rules={field.rules}
@@ -226,6 +246,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   defaultChecked={field.defaultValue}
                   rules={field.rules}
                   errors={fieldErrors}
@@ -241,6 +265,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   defaultChecked={field.defaultValue}
                   rules={field.rules}
                   errors={fieldErrors}
@@ -256,6 +284,10 @@ export function SchemaForm<TSchema extends FormSchema>({
                   fieldId={fieldId}
                   name={fieldName}
                   label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
                   options={field.options}
                   defaultValue={field.defaultValue}
                   rules={field.rules}
