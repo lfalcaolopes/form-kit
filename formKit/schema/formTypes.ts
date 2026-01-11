@@ -32,6 +32,7 @@ type BaseFieldConfig<TValue> = {
   permission?: string
   hidden?: boolean
   shouldHide?: FieldCondition
+  getIsRequired?: FieldCondition
 }
 
 type InputFieldConfig = BaseFieldConfig<string | number> & {

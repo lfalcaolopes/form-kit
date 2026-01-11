@@ -12,6 +12,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] Before/after save hooks (onBeforeSave/onAfterSave)
 - [x] Transform data before submit
 - [x] Permission-aware props (hasPermission - a function that returns a boolean)
+- [ ] Create a text file, so it is easy to change default text on the form
 
 - [ ] Save bar behavior
 - [ ] Watch handlers for field changes (possible to be done even with register)
@@ -45,7 +46,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] readOnly / disabled
 - [x] hidden
 - [x] shouldHide (conditional rendering)
-- [ ] getIsRequired (conditional required)
+- [x] getIsRequired (conditional required)
 - [ ] row / column layout metadata
 - [ ] dynamic options (getOptions)
 - [ ] enum-backed options (use ENUM values to populate select options)

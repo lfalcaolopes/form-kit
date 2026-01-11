@@ -14,6 +14,7 @@ import {
 import {
   FieldType,
   fieldTypeComponentMap,
+  type FormFieldConfig,
   type FormSchema,
   type FormValuesFromSchema,
 } from '@/formKit/schema'
@@ -93,6 +94,25 @@ export function SchemaForm<TSchema extends FormSchema>({
     handleSubmit,
     formState: { errors },
   } = form
+  const resolveFieldRules = (field: FormFieldConfig) => {
+    if (!field.getIsRequired) {
+      return field.rules
+    }
+    const isRequired = field.getIsRequired({ values: watchedValues })
+    if (isRequired) {
+      return {
+        ...field.rules,
+        required: field.rules?.required ?? 'This field is required',
+      }
+    }
+    if (!field.rules) {
+      return undefined
+    }
+    return {
+      ...field.rules,
+      required: false,
+    }
+  }
 
   const fields = Object.values(schema)
   const handleFormSubmit = async (values: FormValues<TSchema>) => {
@@ -147,6 +167,7 @@ export function SchemaForm<TSchema extends FormSchema>({
             const fieldName = field.name as Path<FormValues<TSchema>>
             const fieldId = `${baseId}-${field.name}`
             const fieldErrors = getFieldErrors(errors, fieldName)
+            const fieldRules = resolveFieldRules(field)
 
             if (field.field === FieldType.Input) {
               const Input = fieldTypeComponentMap[FieldType.Input]
@@ -163,7 +184,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   type={field.type}
                   placeholder={field.placeholder}
                   mask={field.mask}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )
@@ -184,7 +205,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   type="password"
                   placeholder={field.placeholder}
                   mask={field.mask}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )
@@ -203,7 +224,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   readOnly={field.readOnly}
                   disabled={field.disabled}
                   placeholder={field.placeholder}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )
@@ -223,7 +244,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   disabled={field.disabled}
                   options={field.options}
                   defaultValue={field.defaultValue}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )
@@ -243,7 +264,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   disabled={field.disabled}
                   options={field.options}
                   defaultValue={field.defaultValue}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )
@@ -263,7 +284,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   readOnly={field.readOnly}
                   disabled={field.disabled}
                   defaultChecked={field.defaultValue}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )
@@ -282,7 +303,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   readOnly={field.readOnly}
                   disabled={field.disabled}
                   defaultChecked={field.defaultValue}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )
@@ -302,7 +323,7 @@ export function SchemaForm<TSchema extends FormSchema>({
                   disabled={field.disabled}
                   options={field.options}
                   defaultValue={field.defaultValue}
-                  rules={field.rules}
+                  rules={fieldRules}
                   errors={fieldErrors}
                 />
               )

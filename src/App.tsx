@@ -120,6 +120,8 @@ const demoSchema = defineFormSchema({
     field: FieldType.Textarea,
     placeholder: 'Add context for the team.',
     shouldHide: ({ values }) => !values.followUp,
+    getIsRequired: ({values }) => values.followUp,
+    rules: { required: 'Follow up notes is required when follor up is enabled' },
   },
   plan: {
     name: 'plan',
