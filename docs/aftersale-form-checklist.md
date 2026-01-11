@@ -40,9 +40,9 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] placeholder (Input, Textarea)
 - [x] rules (React Hook Form validation)
 - [x] static options (Select, Radio)
-- [ ] helpText
-- [ ] icon
-- [ ] readOnly / disabled
+- [x] helpText
+- [x] icon
+- [x] readOnly / disabled
 - [ ] hidden
 - [ ] shouldHide (conditional rendering)
 - [ ] getIsRequired (conditional required)
