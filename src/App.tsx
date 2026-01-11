@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import {
@@ -202,6 +202,7 @@ const baseValues = {
 }
 
 function DemoForm({ title, description, mode }: DemoFormProps) {
+  const [isEdit, setIsEdit] = useState(false)
   const formId = useId()
   const form = useForm({ defaultValues: baseValues })
   const isReadOnly = mode === 'readOnly'
@@ -220,7 +221,7 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             name="fullName"
             label="Full name"
             placeholder="Ada Lovelace"
-            readOnly={isReadOnly}
+            readOnly={isReadOnly && !isEdit}
             disabled={isDisabled}
           />
           <InputField
@@ -229,7 +230,7 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             type="email"
             label="Email address"
             placeholder="ada@example.com"
-            readOnly={isReadOnly}
+            readOnly={isReadOnly && !isEdit}
             disabled={isDisabled}
           />
           <InputField
@@ -238,7 +239,7 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             type="password"
             label="Access key"
             placeholder="Enter a secure access key"
-            readOnly={isReadOnly}
+            readOnly={isReadOnly && !isEdit}
             disabled={isDisabled}
           />
           <TextareaField
@@ -246,7 +247,7 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             name="summary"
             label="Project summary"
             placeholder="Tell us about your project goals."
-            readOnly={isReadOnly}
+            readOnly={isReadOnly && !isEdit}
             disabled={isDisabled}
           />
           <SelectField
@@ -255,7 +256,7 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             label="Role"
             options={roleOptions}
             defaultValue="designer"
-            readOnly={isReadOnly}
+            readOnly={isReadOnly && !isEdit}
             disabled={isDisabled}
           />
           <RadioField
@@ -264,7 +265,9 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             label="Plan"
             options={planOptions}
             defaultValue="premium"
-            readOnly={isReadOnly}
+            
+            readOnly={isReadOnly && !isEdit}
+
             disabled={isDisabled}
           />
           <CheckboxGroupField
@@ -273,7 +276,7 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             label="Availability"
             options={availabilityOptions}
             defaultValue={['morning', 'night']}
-            readOnly={isReadOnly}
+            readOnly={isReadOnly && !isEdit}
             disabled={isDisabled}
           />
           <SwitchField
@@ -281,7 +284,9 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             name="alerts"
             label="Enable alerts"
             defaultChecked
-            readOnly={isReadOnly}
+            
+            readOnly={isReadOnly && !isEdit}
+
             disabled={isDisabled}
           />
           <SingleCheckboxField
@@ -289,7 +294,7 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             name="consent"
             label="I agree to receive updates"
             defaultChecked
-            readOnly={isReadOnly}
+            readOnly={isReadOnly && !isEdit}
             disabled={isDisabled}
           />
           {isDisabled ? (
@@ -298,6 +303,9 @@ function DemoForm({ title, description, mode }: DemoFormProps) {
             </Button>
           ) : (
             <ButtonField name="submit" label="Submit application" />
+          )}
+          {isReadOnly && (
+            <Button name='Edit' onClick={()=>{setIsEdit((prev)=>!prev)}}>Edit</Button>
           )}
         </FieldGroup>
       </form>
