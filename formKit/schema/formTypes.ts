@@ -25,6 +25,8 @@ type BaseFieldConfig<TValue> = {
   name: string
   field: FieldType
   label: string
+  row?: number
+  column?: number
   titleBefore?: string
   titleBeforeClassName?: string
   descriptionBefore?: string
@@ -119,6 +121,15 @@ type FieldValueFromConfig<TField extends FormFieldConfig> =
       ? FieldValueByType[TFieldType]
       : never
     : never
+
+export const LayoutStrategy = {
+  Free: 'free',
+  Row: 'row',
+  Column: 'column',
+} as const
+
+export type LayoutStrategy =
+  typeof LayoutStrategy[keyof typeof LayoutStrategy]
 
 export type FormValuesFromSchema<TSchema extends FormSchema> = {
   [K in keyof TSchema]: FieldValueFromConfig<TSchema[K]>

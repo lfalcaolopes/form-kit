@@ -47,7 +47,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] hidden
 - [x] shouldHide (conditional rendering)
 - [x] getIsRequired (conditional required)
-- [ ] row / column layout metadata
+- [x] row / column layout metadata
 - [x] dynamic options (getOptions)
 - [ ] enum-backed options (use ENUM values to populate select options)
 - [x] section headers (titleBefore/descriptionBefore)
@@ -57,9 +57,9 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [ ] file constraints (accept/multiple/maxSize)
 
 ## Layout Options
-- [ ] Row-based layout
-- [ ] Column-based layout
-- [ ] Responsive layout
+- [x] Row-based layout
+- [x] Column-based layout
+- [x] Responsive layout
 - [x] Default single-column rendering
 
 ## Data Processing & Validation Pipeline

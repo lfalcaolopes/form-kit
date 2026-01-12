@@ -17,6 +17,7 @@ import {
   type FormFieldConfig,
   type FormSchema,
   type FormValuesFromSchema,
+  LayoutStrategy,
 } from '@/formKit/schema'
 import { FieldGroup } from '@/formKit/components/fields/Field'
 import { FormHeader } from '@/formKit/components/blocks/formHeader'
@@ -45,6 +46,12 @@ type SchemaFormProps<TSchema extends FormSchema> = {
 type SchemaFormHookArgs<TSchema extends FormSchema> = {
   values: FormValues<TSchema>
   methods: UseFormReturn<FormValues<TSchema>>
+}
+
+type RenderableFieldEntry = {
+  field: FormFieldConfig
+  index: number
+  content: ReactNode
 }
 
 function getFieldErrors<TSchema extends FormSchema>(
@@ -125,7 +132,10 @@ export function SchemaForm<TSchema extends FormSchema>({
     return []
   }
 
-  const fields = Object.values(schema)
+  const fieldEntries = Object.values(schema).map((field, index) => ({
+    field,
+    index,
+  }))
   const handleFormSubmit = async (values: FormValues<TSchema>) => {
     const transformedValues = transformBeforeFormSubmit
       ? await transformBeforeFormSubmit({ values, methods: form })
@@ -148,6 +158,345 @@ export function SchemaForm<TSchema extends FormSchema>({
     }
   }
 
+  const canRenderField = (field: FormFieldConfig) => {
+    const shouldHide =
+      field.hidden ||
+      (field.shouldHide ? field.shouldHide({ values: watchedValues }) : false)
+
+    if (shouldHide) {
+      return false
+    }
+
+    if (field.permission && hasPermission) {
+      return hasPermission(field.permission)
+    }
+
+    return true
+  }
+
+  const renderFieldContent = (field: FormFieldConfig): ReactNode => {
+    const fieldName = field.name as Path<FormValues<TSchema>>
+    const fieldId = `${baseId}-${field.name}`
+    const fieldErrors = getFieldErrors(errors, fieldName)
+    const fieldRules = resolveFieldRules(field)
+
+    const fieldElement = (() => {
+      if (field.field === FieldType.Input) {
+        const Input = fieldTypeComponentMap[FieldType.Input]
+        return (
+          <Input
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            type={field.type}
+            placeholder={field.placeholder}
+            mask={field.mask}
+            inputBefore={field.inputBefore}
+            inputAfter={field.inputAfter}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.SecretText) {
+        const Input = fieldTypeComponentMap[FieldType.SecretText]
+        return (
+          <Input
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            type="password"
+            placeholder={field.placeholder}
+            mask={field.mask}
+            inputBefore={field.inputBefore}
+            inputAfter={field.inputAfter}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.Textarea) {
+        const Textarea = fieldTypeComponentMap[FieldType.Textarea]
+        return (
+          <Textarea
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            placeholder={field.placeholder}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.Select) {
+        const Select = fieldTypeComponentMap[FieldType.Select]
+        const options = resolveFieldOptions(field)
+        return (
+          <Select
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            options={options}
+            defaultValue={field.defaultValue}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.Checkbox) {
+        const Checkbox = fieldTypeComponentMap[FieldType.Checkbox]
+        const options = resolveFieldOptions(field)
+        return (
+          <Checkbox
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            options={options}
+            defaultValue={field.defaultValue}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.SingleCheckbox) {
+        const SingleCheckbox = fieldTypeComponentMap[FieldType.SingleCheckbox]
+        return (
+          <SingleCheckbox
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            defaultChecked={field.defaultValue}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.Switch) {
+        const Switch = fieldTypeComponentMap[FieldType.Switch]
+        return (
+          <Switch
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            defaultChecked={field.defaultValue}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.Radio) {
+        const Radio = fieldTypeComponentMap[FieldType.Radio]
+        const options = resolveFieldOptions(field)
+        return (
+          <Radio
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            options={options}
+            defaultValue={field.defaultValue}
+            rules={fieldRules}
+            errors={fieldErrors}
+          />
+        )
+      }
+
+      if (field.field === FieldType.Button) {
+        const Button = fieldTypeComponentMap[FieldType.Button]
+        return <Button name={field.name} label={field.label} />
+      }
+
+      return null
+    })()
+
+    if (!fieldElement) {
+      return null
+    }
+
+    return (
+      <>
+        {(field.titleBefore || field.descriptionBefore) && (
+          <SectionHeader
+            title={field.titleBefore}
+            description={field.descriptionBefore}
+            titleClassName={field.titleBeforeClassName}
+            descriptionClassName={field.descriptionBeforeClassName}
+          />
+        )}
+        {field.componentBefore}
+        {fieldElement}
+        {field.componentAfter}
+      </>
+    )
+  }
+
+  const visibleFields = fieldEntries.filter(({ field }) => canRenderField(field))
+
+  const renderableFields = visibleFields
+    .map((entry) => ({
+      ...entry,
+      content: renderFieldContent(entry.field),
+    }))
+    .filter(
+      (entry): entry is RenderableFieldEntry =>
+        entry.content !== null && entry.content !== undefined,
+    )
+
+  const resolveLayoutStrategy = (
+    entries: Array<{ field: FormFieldConfig }>,
+  ): LayoutStrategy => {
+    const hasRow = entries.some(({ field }) => typeof field.row === 'number')
+    const hasColumn = entries.some(
+      ({ field }) => typeof field.column === 'number',
+    )
+
+    if (hasRow && hasColumn) {
+      console.warn(
+        'SchemaForm: row and column layout metadata cannot be mixed. Falling back to free layout.',
+      )
+      return LayoutStrategy.Free
+    }
+
+    if (hasRow) {
+      const hasMissing = entries.some(
+        ({ field }) => typeof field.row !== 'number',
+      )
+      if (hasMissing) {
+        console.warn(
+          'SchemaForm: every visible field must declare a row when using row layout. Falling back to free layout.',
+        )
+        return LayoutStrategy.Free
+      }
+      return LayoutStrategy.Row
+    }
+
+    if (hasColumn) {
+      const hasMissing = entries.some(
+        ({ field }) => typeof field.column !== 'number',
+      )
+      if (hasMissing) {
+        console.warn(
+          'SchemaForm: every visible field must declare a column when using column layout. Falling back to free layout.',
+        )
+        return LayoutStrategy.Free
+      }
+      return LayoutStrategy.Column
+    }
+
+    return LayoutStrategy.Free
+  }
+
+  const layoutStrategy = resolveLayoutStrategy(renderableFields)
+
+  const renderFields = () => {
+    if (layoutStrategy === LayoutStrategy.Row) {
+      const rows = new Map<number, typeof renderableFields>()
+      renderableFields.forEach((entry) => {
+        const row = entry.field.row ?? 0
+        if (!rows.has(row)) {
+          rows.set(row, [])
+        }
+        rows.get(row)?.push(entry)
+      })
+
+      return [...rows.entries()]
+        .sort(([rowA], [rowB]) => rowA - rowB)
+        .map(([row, rowEntries]) => (
+          <div key={`row-${row}`} className="flex flex-col gap-7 md:flex-row">
+            {rowEntries
+              .sort((a, b) => a.index - b.index)
+              .map((entry) => (
+                <div
+                  key={`${baseId}-${entry.field.name}`}
+                  className="flex min-w-0 flex-1 flex-col gap-7"
+                >
+                  {entry.content}
+                </div>
+              ))}
+          </div>
+        ))
+    }
+
+    if (layoutStrategy === LayoutStrategy.Column) {
+      const columns = new Map<number, typeof renderableFields>()
+      renderableFields.forEach((entry) => {
+        const column = entry.field.column ?? 0
+        if (!columns.has(column)) {
+          columns.set(column, [])
+        }
+        columns.get(column)?.push(entry)
+      })
+
+      return (
+        <div className="flex flex-col gap-7 md:flex-row">
+          {[...columns.entries()]
+            .sort(([columnA], [columnB]) => columnA - columnB)
+            .map(([column, columnEntries]) => (
+              <div
+                key={`column-${column}`}
+                className="flex min-w-0 flex-1 flex-col gap-7"
+              >
+                {columnEntries
+                  .sort((a, b) => a.index - b.index)
+                  .map((entry) => (
+                    <div
+                      key={`${baseId}-${entry.field.name}`}
+                      className="flex min-w-0 flex-1 flex-col gap-7"
+                    >
+                      {entry.content}
+                    </div>
+                  ))}
+              </div>
+            ))}
+        </div>
+      )
+    }
+
+    return renderableFields.map((entry) => (
+      <Fragment key={`${baseId}-${entry.field.name}`}>
+        {entry.content}
+      </Fragment>
+    ))
+  }
+
   return (
     <FormProvider {...form}>
       <form
@@ -156,219 +505,7 @@ export function SchemaForm<TSchema extends FormSchema>({
         noValidate
       >
         <FormHeader title={title} info={formInfo} />
-        <FieldGroup>
-          {fields.map((field) => {
-            const shouldHide =
-              field.hidden ||
-              (field.shouldHide
-                ? field.shouldHide({ values: watchedValues })
-                : false)
-
-            if (shouldHide) {
-              return null
-            }
-
-            if (field.permission && hasPermission) {
-              const canRender = hasPermission(field.permission)
-              if (!canRender) {
-                return null
-              }
-            }
-
-            const fieldName = field.name as Path<FormValues<TSchema>>
-            const fieldId = `${baseId}-${field.name}`
-            const fieldErrors = getFieldErrors(errors, fieldName)
-            const fieldRules = resolveFieldRules(field)
-
-            const fieldElement = (() => {
-              if (field.field === FieldType.Input) {
-                const Input = fieldTypeComponentMap[FieldType.Input]
-                return (
-                  <Input
-                    fieldId={fieldId}
-                    name={fieldName}
-                  label={field.label}
-                  helpText={field.helpText}
-                  icon={field.icon}
-                  readOnly={field.readOnly}
-                  disabled={field.disabled}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  mask={field.mask}
-                  inputBefore={field.inputBefore}
-                  inputAfter={field.inputAfter}
-                  rules={fieldRules}
-                  errors={fieldErrors}
-                />
-              )
-            }
-
-              if (field.field === FieldType.SecretText) {
-                const Input = fieldTypeComponentMap[FieldType.SecretText]
-                return (
-                  <Input
-                    fieldId={fieldId}
-                    name={fieldName}
-                  label={field.label}
-                  helpText={field.helpText}
-                  icon={field.icon}
-                  readOnly={field.readOnly}
-                  disabled={field.disabled}
-                  type="password"
-                  placeholder={field.placeholder}
-                  mask={field.mask}
-                  inputBefore={field.inputBefore}
-                  inputAfter={field.inputAfter}
-                  rules={fieldRules}
-                  errors={fieldErrors}
-                />
-              )
-            }
-
-              if (field.field === FieldType.Textarea) {
-                const Textarea = fieldTypeComponentMap[FieldType.Textarea]
-                return (
-                  <Textarea
-                    fieldId={fieldId}
-                    name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    placeholder={field.placeholder}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
-
-              if (field.field === FieldType.Select) {
-                const Select = fieldTypeComponentMap[FieldType.Select]
-                const options = resolveFieldOptions(field)
-                return (
-                  <Select
-                    fieldId={fieldId}
-                    name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    options={options}
-                    defaultValue={field.defaultValue}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
-
-              if (field.field === FieldType.Checkbox) {
-                const Checkbox = fieldTypeComponentMap[FieldType.Checkbox]
-                const options = resolveFieldOptions(field)
-                return (
-                  <Checkbox
-                    fieldId={fieldId}
-                    name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    options={options}
-                    defaultValue={field.defaultValue}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
-
-              if (field.field === FieldType.SingleCheckbox) {
-                const SingleCheckbox =
-                  fieldTypeComponentMap[FieldType.SingleCheckbox]
-                return (
-                  <SingleCheckbox
-                    fieldId={fieldId}
-                    name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    defaultChecked={field.defaultValue}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
-
-              if (field.field === FieldType.Switch) {
-                const Switch = fieldTypeComponentMap[FieldType.Switch]
-                return (
-                  <Switch
-                    fieldId={fieldId}
-                    name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    defaultChecked={field.defaultValue}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
-
-              if (field.field === FieldType.Radio) {
-                const Radio = fieldTypeComponentMap[FieldType.Radio]
-                const options = resolveFieldOptions(field)
-                return (
-                  <Radio
-                    fieldId={fieldId}
-                    name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    options={options}
-                    defaultValue={field.defaultValue}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
-
-              if (field.field === FieldType.Button) {
-                const Button = fieldTypeComponentMap[FieldType.Button]
-                return <Button name={field.name} label={field.label} />
-              }
-
-              return null
-            })()
-
-            if (!fieldElement) {
-              return null
-            }
-
-            return (
-              <Fragment key={fieldId}>
-                {(field.titleBefore || field.descriptionBefore) && (
-                  <SectionHeader
-                    title={field.titleBefore}
-                    description={field.descriptionBefore}
-                    titleClassName={field.titleBeforeClassName}
-                    descriptionClassName={field.descriptionBeforeClassName}
-                  />
-                )}
-                {field.componentBefore}
-                {fieldElement}
-                {field.componentAfter}
-              </Fragment>
-            )
-          })}
-        </FieldGroup>
+        <FieldGroup>{renderFields()}</FieldGroup>
       </form>
     </FormProvider>
   )

@@ -251,6 +251,113 @@ const availabilityOptions = [
   { label: 'Night', value: 'night' },
 ]
 
+const layoutSchema = defineFormSchema({
+  firstName: {
+    name: 'firstName',
+    label: 'First name',
+    field: FieldType.Input,
+    row: 1,
+    placeholder: 'Ada',
+    rules: { required: 'First name is required' },
+  },
+  lastName: {
+    name: 'lastName',
+    label: 'Last name',
+    field: FieldType.Input,
+    row: 1,
+    placeholder: 'Lovelace',
+    rules: { required: 'Last name is required' },
+  },
+  email: {
+    name: 'email',
+    label: 'Work email',
+    field: FieldType.Input,
+    row: 2,
+    type: 'email',
+    placeholder: 'ada@lovelace.studio',
+  },
+  role: {
+    name: 'role',
+    label: 'Role',
+    field: FieldType.Select,
+    row: 2,
+    defaultValue: 'designer',
+    options: roleOptions,
+  },
+  notes: {
+    name: 'notes',
+    label: 'Notes',
+    field: FieldType.Textarea,
+    row: 3,
+    placeholder: 'Anything the team should know?',
+  },
+  submit: {
+    name: 'submit',
+    label: 'Save layout example',
+    field: FieldType.Button,
+    row: 4,
+  },
+})
+
+type LayoutValues = FormValuesFromSchema<typeof layoutSchema>
+
+const handleLayoutSubmit = (values: LayoutValues) => {
+  console.log('Layout submitted', values)
+}
+
+const columnLayoutSchema = defineFormSchema({
+  summary: {
+    name: 'summary',
+    label: 'Summary',
+    field: FieldType.Textarea,
+    column: 0,
+    placeholder: 'High-level overview for the team.',
+  },
+  priority: {
+    name: 'priority',
+    label: 'Priority',
+    field: FieldType.Radio,
+    column: 0,
+    defaultValue: 'normal',
+    options: [
+      { label: 'Low', value: 'low' },
+      { label: 'Normal', value: 'normal' },
+      { label: 'Urgent', value: 'urgent' },
+    ],
+  },
+  owner: {
+    name: 'owner',
+    label: 'Owner',
+    field: FieldType.Input,
+    column: 1,
+    placeholder: 'Assigned teammate',
+  },
+  status: {
+    name: 'status',
+    label: 'Status',
+    field: FieldType.Select,
+    column: 1,
+    defaultValue: 'open',
+    options: [
+      { label: 'Open', value: 'open' },
+      { label: 'In progress', value: 'in-progress' },
+      { label: 'Blocked', value: 'blocked' },
+    ],
+  },
+  submit: {
+    name: 'submit',
+    label: 'Save column example',
+    field: FieldType.Button,
+    column: 1,
+  },
+})
+
+type ColumnLayoutValues = FormValuesFromSchema<typeof columnLayoutSchema>
+
+const handleColumnLayoutSubmit = (values: ColumnLayoutValues) => {
+  console.log('Column layout submitted', values)
+}
+
 type DemoFormMode = 'normal' | 'readOnly' | 'disabled'
 
 type DemoFormProps = {
@@ -413,6 +520,24 @@ function App() {
                 hasPermission={hasPermission}
               />
             </div>
+          </div>
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+            <SchemaForm
+              schema={layoutSchema}
+              className="space-y-6"
+              title="Row layout example"
+              formInfo="Fields share rows on larger screens and stack on small screens."
+              onSubmit={handleLayoutSubmit}
+            />
+          </div>
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+            <SchemaForm
+              schema={columnLayoutSchema}
+              className="space-y-6"
+              title="Column layout example"
+              formInfo="Fields group into columns on large screens and stack on mobile."
+              onSubmit={handleColumnLayoutSubmit}
+            />
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
             <DemoForm
