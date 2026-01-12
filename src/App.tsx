@@ -85,6 +85,24 @@ const demoSchema = defineFormSchema({
       </div>
     ),
   },
+  website: {
+    name: 'website',
+    label: 'Company site',
+    field: FieldType.Input,
+    placeholder: 'studio',
+    inputBefore: <span className="text-xs text-slate-500">https://</span>,
+    inputAfter: <span className="text-xs text-slate-500">.com</span>,
+    helpText: 'Leave blank if you do not have a public site.',
+  },
+  phone: {
+    name: 'phone',
+    label: 'Phone',
+    field: FieldType.Input,
+    type: 'tel',
+    placeholder: '(55) 12345-6789',
+    mask: '(99) 99999-9999',
+    helpText: 'Digits only; formatting is applied automatically.',
+  },
   accessKey: {
     name: 'accessKey',
     label: 'Access key',

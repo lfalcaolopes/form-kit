@@ -48,12 +48,16 @@ type InputFieldConfig = BaseFieldConfig<string | number> & {
   type?: HTMLInputTypeAttribute
   placeholder?: string
   mask?: string
+  inputBefore?: ReactNode
+  inputAfter?: ReactNode
 }
 
 type SecretTextFieldConfig = BaseFieldConfig<string> & {
   field: typeof FieldType.SecretText
   placeholder?: string
   mask?: string
+  inputBefore?: ReactNode
+  inputAfter?: ReactNode
 }
 
 type TextareaFieldConfig = BaseFieldConfig<string> & {

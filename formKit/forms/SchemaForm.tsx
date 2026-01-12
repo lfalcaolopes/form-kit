@@ -187,19 +187,21 @@ export function SchemaForm<TSchema extends FormSchema>({
                   <Input
                     fieldId={fieldId}
                     name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    mask={field.mask}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
+                  label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  mask={field.mask}
+                  inputBefore={field.inputBefore}
+                  inputAfter={field.inputAfter}
+                  rules={fieldRules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
               if (field.field === FieldType.SecretText) {
                 const Input = fieldTypeComponentMap[FieldType.SecretText]
@@ -207,19 +209,21 @@ export function SchemaForm<TSchema extends FormSchema>({
                   <Input
                     fieldId={fieldId}
                     name={fieldName}
-                    label={field.label}
-                    helpText={field.helpText}
-                    icon={field.icon}
-                    readOnly={field.readOnly}
-                    disabled={field.disabled}
-                    type="password"
-                    placeholder={field.placeholder}
-                    mask={field.mask}
-                    rules={fieldRules}
-                    errors={fieldErrors}
-                  />
-                )
-              }
+                  label={field.label}
+                  helpText={field.helpText}
+                  icon={field.icon}
+                  readOnly={field.readOnly}
+                  disabled={field.disabled}
+                  type="password"
+                  placeholder={field.placeholder}
+                  mask={field.mask}
+                  inputBefore={field.inputBefore}
+                  inputAfter={field.inputAfter}
+                  rules={fieldRules}
+                  errors={fieldErrors}
+                />
+              )
+            }
 
               if (field.field === FieldType.Textarea) {
                 const Textarea = fieldTypeComponentMap[FieldType.Textarea]

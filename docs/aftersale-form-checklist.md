@@ -52,7 +52,8 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [ ] enum-backed options (use ENUM values to populate select options)
 - [x] section headers (titleBefore/descriptionBefore)
 - [x] custom components before/after fields
-- [ ] input masks (behavioral masking)
+- [x] input masks (behavioral masking)
+- [x] input before/after inline components that renders in the begining or ending of the field
 - [ ] file constraints (accept/multiple/maxSize)
 
 ## Layout Options
