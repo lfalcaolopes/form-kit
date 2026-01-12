@@ -41,6 +41,8 @@ const demoSchema = defineFormSchema({
     name: 'fullName',
     label: 'Full name',
     field: FieldType.Input,
+    titleBefore: 'Contact details',
+    descriptionBefore: 'Tell us who to reach about this request.',
     placeholder: 'Ada Lovelace',
     icon: (
       <svg

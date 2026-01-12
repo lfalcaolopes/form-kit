@@ -25,6 +25,10 @@ type BaseFieldConfig<TValue> = {
   name: string
   field: FieldType
   label: string
+  titleBefore?: string
+  titleBeforeClassName?: string
+  descriptionBefore?: string
+  descriptionBeforeClassName?: string
   helpText?: ReactNode
   icon?: ReactNode
   readOnly?: boolean

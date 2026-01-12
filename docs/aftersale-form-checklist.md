@@ -50,7 +50,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [ ] row / column layout metadata
 - [x] dynamic options (getOptions)
 - [ ] enum-backed options (use ENUM values to populate select options)
-- [ ] section headers (titleBefore/descriptionBefore)
+- [x] section headers (titleBefore/descriptionBefore)
 - [ ] custom components before/after fields
 - [ ] input masks (behavioral masking)
 - [ ] file constraints (accept/multiple/maxSize)
