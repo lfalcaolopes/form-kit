@@ -29,6 +29,8 @@ type BaseFieldConfig<TValue> = {
   titleBeforeClassName?: string
   descriptionBefore?: string
   descriptionBeforeClassName?: string
+  componentBefore?: ReactNode
+  componentAfter?: ReactNode
   helpText?: ReactNode
   icon?: ReactNode
   readOnly?: boolean

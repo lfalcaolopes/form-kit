@@ -66,6 +66,11 @@ const demoSchema = defineFormSchema({
     field: FieldType.Input,
     type: 'email',
     placeholder: 'ada@example.com',
+    componentBefore: (
+      <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+        Use a shared inbox if multiple people should receive updates.
+      </div>
+    ),
     helpText: 'We will only send delivery updates.',
     rules: {
       required: 'Email is required',
@@ -74,6 +79,11 @@ const demoSchema = defineFormSchema({
         message: 'Enter a valid email address',
       },
     },
+    componentAfter: (
+      <div className="text-xs text-slate-500">
+        We recommend addresses that can accept external mail.
+      </div>
+    ),
   },
   accessKey: {
     name: 'accessKey',

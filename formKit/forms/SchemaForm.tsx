@@ -358,7 +358,9 @@ export function SchemaForm<TSchema extends FormSchema>({
                     descriptionClassName={field.descriptionBeforeClassName}
                   />
                 )}
+                {field.componentBefore}
                 {fieldElement}
+                {field.componentAfter}
               </Fragment>
             )
           })}
