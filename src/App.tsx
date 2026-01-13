@@ -21,6 +21,12 @@ import {
   type FormValuesFromSchema,
 } from '../formKit/schema'
 
+const UrgencyLevel = {
+  LOW: 'low',
+  NORMAL: 'normal',
+  HIGH: 'high',
+} as const
+
 const demoSchema = defineFormSchema({
   requestId: {
     name: 'requestId',
@@ -129,6 +135,14 @@ const demoSchema = defineFormSchema({
     field: FieldType.Textarea,
     placeholder: 'Tell us about your project goals.',
     rules: { minLength: { value: 10, message: 'Add a bit more detail.' } },
+  },
+  urgency: {
+    name: 'urgency',
+    label: 'Urgency',
+    field: FieldType.Select,
+    defaultValue: UrgencyLevel.NORMAL,
+    enumOptions: UrgencyLevel,
+    helpText: 'Enum-backed options keep labels consistent.',
   },
   alerts: {
     name: 'alerts',

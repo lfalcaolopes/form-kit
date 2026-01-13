@@ -54,6 +54,27 @@ type RenderableFieldEntry = {
   content: ReactNode
 }
 
+const formatEnumLabel = (value: string) => {
+  const normalized = value
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/[_-]+/g, ' ')
+    .trim()
+
+  return normalized
+    .split(' ')
+    .filter(Boolean)
+    .map(
+      (part) => `${part.charAt(0).toUpperCase()}${part.slice(1).toLowerCase()}`,
+    )
+    .join(' ')
+}
+
+const resolveEnumOptions = (enumValues: Record<string, string>) =>
+  Object.entries(enumValues).map(([key, value]) => ({
+    label: formatEnumLabel(key),
+    value,
+  }))
+
 function getFieldErrors<TSchema extends FormSchema>(
   errors: FieldErrors<FormValues<TSchema>>,
   fieldName: Path<FormValues<TSchema>>,
@@ -110,7 +131,7 @@ export function SchemaForm<TSchema extends FormSchema>({
     if (isRequired) {
       return {
         ...field.rules,
-        required: field.rules?.required ?? 'This field is required',
+        required: field.rules?.required ?? 'Esse campo é obrigatorio',
       }
     }
     if (!field.rules) {
@@ -124,10 +145,16 @@ export function SchemaForm<TSchema extends FormSchema>({
 
   const resolveFieldOptions = (field: FormFieldConfig) => {
     if ('getOptions' in field && field.getOptions) {
-      return field.getOptions({ values: watchedValues }) ?? field.options ?? []
+      const resolvedOptions = field.getOptions({ values: watchedValues })
+      if (resolvedOptions !== undefined) {
+        return resolvedOptions
+      }
     }
-    if ('options' in field) {
-      return field.options ?? []
+    if ('options' in field && field.options?.length) {
+      return field.options
+    }
+    if ('enumOptions' in field && field.enumOptions) {
+      return resolveEnumOptions(field.enumOptions)
     }
     return []
   }

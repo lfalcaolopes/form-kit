@@ -20,6 +20,7 @@ type FieldCondition = (args: {
 }) => boolean
 
 type FieldOptionsResolver = (args: { values: FieldValues }) => SelectOption[]
+type EnumOptions = Record<string, string>
 
 type BaseFieldConfig<TValue> = {
   name: string
@@ -76,12 +77,14 @@ type SelectFieldConfig = BaseFieldConfig<string> & {
   field: typeof FieldType.Select
   options?: SelectOption[]
   getOptions?: FieldOptionsResolver
+  enumOptions?: EnumOptions
 }
 
 type CheckboxFieldConfig = BaseFieldConfig<string[]> & {
   field: typeof FieldType.Checkbox
   options?: SelectOption[]
   getOptions?: FieldOptionsResolver
+  enumOptions?: EnumOptions
 }
 
 type SwitchFieldConfig = BaseFieldConfig<boolean> & {
@@ -96,6 +99,7 @@ type RadioFieldConfig = BaseFieldConfig<string> & {
   field: typeof FieldType.Radio
   options?: SelectOption[]
   getOptions?: FieldOptionsResolver
+  enumOptions?: EnumOptions
 }
 
 type ButtonFieldConfig = BaseFieldConfig<never> & {
