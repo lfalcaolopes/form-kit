@@ -16,16 +16,100 @@ import { FormHeader } from '../formKit/components/blocks/formHeader'
 import { Button } from '../formKit/components/units/button'
 import { SchemaForm } from '../formKit/forms'
 import {
+  type CustomFieldComponentProps,
   defineFormSchema,
   FieldType,
   type FormValuesFromSchema,
 } from '../formKit/schema'
+import { cn } from '../formKit/utils'
 
 const UrgencyLevel = {
   LOW: 'low',
   NORMAL: 'normal',
   HIGH: 'high',
 } as const
+
+const priorityToneOptions = [
+  {
+    label: 'Balanced',
+    value: 'balanced',
+    description: 'Steady updates with a measured response.',
+  },
+  {
+    label: 'Expedite',
+    value: 'expedite',
+    description: 'Flag this request for quick turnaround.',
+  },
+  {
+    label: 'Critical',
+    value: 'critical',
+    description: 'Escalate with maximum urgency.',
+  },
+]
+
+type PriorityToneFieldProps = CustomFieldComponentProps & {
+  options?: Array<{
+    label: string
+    value: string
+    description: string
+  }>
+}
+
+const PriorityToneField = ({
+  name,
+  form,
+  options = [],
+  disabled,
+  readOnly,
+  rules,
+}: PriorityToneFieldProps) => {
+  const currentValue = form.watch(name)
+
+  return (
+    <div className="grid gap-2">
+      {options.map((option) => {
+        const isActive = currentValue === option.value
+
+        return (
+          <button
+            key={option.value}
+            type="button"
+            className={cn(
+              'flex w-full items-start justify-between gap-3 rounded-2xl border px-4 py-3 text-left text-sm transition',
+              isActive
+                ? 'border-slate-900 bg-slate-900 text-white'
+                : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+              (disabled || readOnly) && 'cursor-not-allowed opacity-60',
+            )}
+            onClick={() => {
+              if (disabled || readOnly) {
+                return
+              }
+              form.setValue(name, option.value, {
+                shouldDirty: true,
+                shouldValidate: true,
+              })
+            }}
+            disabled={disabled || readOnly}
+          >
+            <span className="flex flex-col gap-1">
+              <span className="text-sm font-semibold">{option.label}</span>
+              <span className="text-xs text-slate-500">
+                {option.description}
+              </span>
+            </span>
+            {isActive && (
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Active
+              </span>
+            )}
+          </button>
+        )
+      })}
+      <input type="hidden" {...form.register(name, rules)} />
+    </div>
+  )
+}
 
 const demoSchema = defineFormSchema({
   requestId: {
@@ -143,6 +227,17 @@ const demoSchema = defineFormSchema({
     defaultValue: UrgencyLevel.NORMAL,
     enumOptions: UrgencyLevel,
     helpText: 'Enum-backed options keep labels consistent.',
+  },
+  priorityTone: {
+    name: 'priorityTone',
+    label: 'Priority tone',
+    field: FieldType.Custom,
+    defaultValue: 'balanced',
+    component: PriorityToneField,
+    componentProps: {
+      options: priorityToneOptions,
+    },
+    helpText: 'Highlight the response expectation for this request.',
   },
   alerts: {
     name: 'alerts',

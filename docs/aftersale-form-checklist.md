@@ -27,7 +27,7 @@ Based on `docs/aftersale-form.md` versus what is currently implemented in `formK
 - [x] Submit button field
 - [x] Secret text field type
 - [x] Checkbox group (multiple options)
-- [ ] Custom component field (a way to manage custom single use components)
+- [x] Custom component field (a way to manage custom single use components)
 
 - [ ] File upload
 - [ ] Multi-select
