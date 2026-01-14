@@ -28,6 +28,6 @@ npm install @radix-ui/react-label @radix-ui/react-separator @radix-ui/react-slot
 
 ## Documentation Index
 
-- `docs/formkit-implementation.md`
-- `docs/formkit-usage.md`
-- `docs/adding-new-field.md`
+- [`docs/formkit-implementation.md`](https://github.com/lfalcaolopes/form-kit/blob/main/formKit/docs/formkit-implementation.md)
+- [`docs/formkit-usage.md`](https://github.com/lfalcaolopes/form-kit/blob/main/formKit/docs/formkit-usage.md)
+- [`docs/adding-new-field.md`](https://github.com/lfalcaolopes/form-kit/blob/main/formKit/docs/adding-new-field.md)
