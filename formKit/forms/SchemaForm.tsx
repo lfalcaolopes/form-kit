@@ -371,6 +371,25 @@ export function SchemaForm<TSchema extends FormSchema>({
         return <Button name={field.name} label={field.label} />
       }
 
+      if (field.field === FieldType.Custom) {
+        const Custom = fieldTypeComponentMap[FieldType.Custom]
+        return (
+          <Custom
+            fieldId={fieldId}
+            name={fieldName}
+            label={field.label}
+            helpText={field.helpText}
+            icon={field.icon}
+            readOnly={field.readOnly}
+            disabled={field.disabled}
+            rules={fieldRules}
+            component={field.component}
+            componentProps={field.componentProps}
+            errors={fieldErrors}
+          />
+        )
+      }
+
       return null
     })()
 

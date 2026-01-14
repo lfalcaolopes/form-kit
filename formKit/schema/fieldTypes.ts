@@ -2,6 +2,7 @@ import type { ComponentProps, ComponentType } from 'react'
 
 import { ButtonField } from '../components/fields/ButtonField'
 import { CheckboxGroupField } from '../components/fields/CheckboxGroupField'
+import { CustomField } from '../components/fields/CustomField'
 import { InputField } from '../components/fields/InputField'
 import { RadioField } from '../components/fields/RadioField'
 import { SelectField } from '../components/fields/SelectField'
@@ -19,6 +20,7 @@ export const FieldType = {
   Radio: 'radio',
   Switch: 'switch',
   Button: 'button',
+  Custom: 'custom',
 } as const
 
 export type FieldType = typeof FieldType[keyof typeof FieldType]
@@ -33,6 +35,7 @@ type FieldComponentProps = {
   [FieldType.Radio]: ComponentProps<typeof RadioField>
   [FieldType.Switch]: ComponentProps<typeof SwitchField>
   [FieldType.Button]: ComponentProps<typeof ButtonField>
+  [FieldType.Custom]: ComponentProps<typeof CustomField>
 }
 
 export const fieldTypeComponentMap: {
@@ -47,4 +50,5 @@ export const fieldTypeComponentMap: {
   [FieldType.Radio]: RadioField,
   [FieldType.Switch]: SwitchField,
   [FieldType.Button]: ButtonField,
+  [FieldType.Custom]: CustomField,
 }

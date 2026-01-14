@@ -1,5 +1,9 @@
-import type { HTMLInputTypeAttribute, ReactNode } from 'react'
-import type { FieldValues, RegisterOptions } from 'react-hook-form'
+import type { ComponentType, HTMLInputTypeAttribute, ReactNode } from 'react'
+import type {
+  FieldValues,
+  RegisterOptions,
+  UseFormReturn,
+} from 'react-hook-form'
 
 import { FieldType } from './fieldTypes'
 
@@ -13,6 +17,7 @@ type FieldValueByType = {
   [FieldType.Radio]: string
   [FieldType.Switch]: boolean
   [FieldType.Button]: never
+  [FieldType.Custom]: unknown
 }
 
 type FieldCondition = (args: {
@@ -44,6 +49,19 @@ type BaseFieldConfig<TValue> = {
   hidden?: boolean
   shouldHide?: FieldCondition
   getIsRequired?: FieldCondition
+}
+
+export type CustomFieldComponentProps = {
+  fieldId: string
+  name: string
+  label: string
+  helpText?: ReactNode
+  icon?: ReactNode
+  readOnly?: boolean
+  disabled?: boolean
+  rules?: RegisterOptions
+  errors?: Array<{ message?: string } | undefined>
+  form: UseFormReturn<FieldValues>
 }
 
 type InputFieldConfig = BaseFieldConfig<string | number> & {
@@ -106,6 +124,12 @@ type ButtonFieldConfig = BaseFieldConfig<never> & {
   field: typeof FieldType.Button
 }
 
+type CustomFieldConfig = BaseFieldConfig<unknown> & {
+  field: typeof FieldType.Custom
+  component: ComponentType<CustomFieldComponentProps & Record<string, unknown>>
+  componentProps?: Record<string, unknown>
+}
+
 export type FormFieldConfig =
   | InputFieldConfig
   | SecretTextFieldConfig
@@ -116,6 +140,7 @@ export type FormFieldConfig =
   | SwitchFieldConfig
   | RadioFieldConfig
   | ButtonFieldConfig
+  | CustomFieldConfig
 
 export type FormSchema = Record<string, FormFieldConfig>
 
