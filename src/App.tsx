@@ -115,7 +115,7 @@ const demoSchema = defineFormSchema({
   requestId: {
     name: 'requestId',
     label: 'Request ID',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     defaultValue: 'REQ-2049',
     readOnly: true,
     helpText: 'Generated after you submit the form.',
@@ -123,14 +123,14 @@ const demoSchema = defineFormSchema({
   internalTag: {
     name: 'internalTag',
     label: 'Internal tag',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     defaultValue: 'INT-448',
     hidden: true,
   },
   fullName: {
     name: 'fullName',
     label: 'Full name',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     titleBefore: 'Contact details',
     descriptionBefore: 'Tell us who to reach about this request.',
     placeholder: 'Ada Lovelace',
@@ -153,7 +153,7 @@ const demoSchema = defineFormSchema({
   email: {
     name: 'email',
     label: 'Email address',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     type: 'email',
     placeholder: 'ada@example.com',
     componentBefore: (
@@ -178,7 +178,7 @@ const demoSchema = defineFormSchema({
   website: {
     name: 'website',
     label: 'Company site',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     placeholder: 'studio',
     inputBefore: <span className="text-xs text-slate-500">https://</span>,
     inputAfter: <span className="text-xs text-slate-500">.com</span>,
@@ -187,7 +187,7 @@ const demoSchema = defineFormSchema({
   phone: {
     name: 'phone',
     label: 'Phone',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     type: 'tel',
     placeholder: '(55) 12345-6789',
     mask: '(99) 99999-9999',
@@ -196,14 +196,14 @@ const demoSchema = defineFormSchema({
   accessKey: {
     name: 'accessKey',
     label: 'Access key',
-    field: FieldType.SecretText,
+    field: FieldType.SECRET_TEXT,
     placeholder: 'Enter a secure access key',
     rules: { required: 'Access key is required' },
   },
   role: {
     name: 'role',
     label: 'Role',
-    field: FieldType.Select,
+    field: FieldType.SELECT,
     defaultValue: 'designer',
     disabled: true,
     helpText: 'Role is assigned by your workspace admin.',
@@ -216,14 +216,14 @@ const demoSchema = defineFormSchema({
   summary: {
     name: 'summary',
     label: 'Project summary',
-    field: FieldType.Textarea,
+    field: FieldType.TEXTAREA,
     placeholder: 'Tell us about your project goals.',
     rules: { minLength: { value: 10, message: 'Add a bit more detail.' } },
   },
   urgency: {
     name: 'urgency',
     label: 'Urgency',
-    field: FieldType.Select,
+    field: FieldType.SELECT,
     defaultValue: UrgencyLevel.NORMAL,
     enumOptions: UrgencyLevel,
     helpText: 'Enum-backed options keep labels consistent.',
@@ -231,7 +231,7 @@ const demoSchema = defineFormSchema({
   priorityTone: {
     name: 'priorityTone',
     label: 'Priority tone',
-    field: FieldType.Custom,
+    field: FieldType.CUSTOM,
     defaultValue: 'balanced',
     component: PriorityToneField,
     componentProps: {
@@ -242,21 +242,21 @@ const demoSchema = defineFormSchema({
   alerts: {
     name: 'alerts',
     label: 'Enable alerts',
-    field: FieldType.Switch,
+    field: FieldType.SWITCH,
     defaultValue: true,
     helpText: 'Notify me when the request status changes.',
   },
   followUp: {
     name: 'followUp',
     label: 'Needs follow-up',
-    field: FieldType.Switch,
+    field: FieldType.SWITCH,
     defaultValue: false,
     helpText: 'Reveal notes when follow-up is enabled.',
   },
   followUpNotes: {
     name: 'followUpNotes',
     label: 'Follow-up notes',
-    field: FieldType.Textarea,
+    field: FieldType.TEXTAREA,
     placeholder: 'Add context for the team.',
     shouldHide: ({ values }) => !values.followUp,
     getIsRequired: ({values }) => values.followUp,
@@ -265,7 +265,7 @@ const demoSchema = defineFormSchema({
   plan: {
     name: 'plan',
     label: 'Plan',
-    field: FieldType.Radio,
+    field: FieldType.RADIO,
     defaultValue: 'premium',
     options: [
       { label: 'Premium plan', value: 'premium' },
@@ -275,7 +275,7 @@ const demoSchema = defineFormSchema({
   supportTier: {
     name: 'supportTier',
     label: 'Support tier',
-    field: FieldType.Select,
+    field: FieldType.SELECT,
     defaultValue: 'priority',
     getOptions: ({ values }) =>
       values.plan === 'premium'
@@ -292,7 +292,7 @@ const demoSchema = defineFormSchema({
   availability: {
     name: 'availability',
     label: 'Availability',
-    field: FieldType.Checkbox,
+    field: FieldType.CHECKBOX,
     permission: 'form:availability:edit',
     options: [
       { label: 'Manhã', value: 'morning' },
@@ -303,13 +303,13 @@ const demoSchema = defineFormSchema({
   consent: {
     name: 'consent',
     label: 'I agree to receive updates',
-    field: FieldType.SingleCheckbox,
+    field: FieldType.SINGLE_CHECKBOX,
     rules: { required: 'Please opt in to continue' },
   },
   submit: {
     name: 'submit',
     label: 'Submit application',
-    field: FieldType.Button,
+    field: FieldType.BUTTON,
     permission: 'form:submit',
   },
 })
@@ -364,7 +364,7 @@ const layoutSchema = defineFormSchema({
   firstName: {
     name: 'firstName',
     label: 'First name',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     row: 1,
     placeholder: 'Ada',
     rules: { required: 'First name is required' },
@@ -372,7 +372,7 @@ const layoutSchema = defineFormSchema({
   lastName: {
     name: 'lastName',
     label: 'Last name',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     row: 1,
     placeholder: 'Lovelace',
     rules: { required: 'Last name is required' },
@@ -380,7 +380,7 @@ const layoutSchema = defineFormSchema({
   email: {
     name: 'email',
     label: 'Work email',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     row: 2,
     type: 'email',
     placeholder: 'ada@lovelace.studio',
@@ -388,7 +388,7 @@ const layoutSchema = defineFormSchema({
   role: {
     name: 'role',
     label: 'Role',
-    field: FieldType.Select,
+    field: FieldType.SELECT,
     row: 2,
     defaultValue: 'designer',
     options: roleOptions,
@@ -396,14 +396,14 @@ const layoutSchema = defineFormSchema({
   notes: {
     name: 'notes',
     label: 'Notes',
-    field: FieldType.Textarea,
+    field: FieldType.TEXTAREA,
     row: 3,
     placeholder: 'Anything the team should know?',
   },
   submit: {
     name: 'submit',
     label: 'Save layout example',
-    field: FieldType.Button,
+    field: FieldType.BUTTON,
     row: 4,
   },
 })
@@ -418,14 +418,14 @@ const columnLayoutSchema = defineFormSchema({
   summary: {
     name: 'summary',
     label: 'Summary',
-    field: FieldType.Textarea,
+    field: FieldType.TEXTAREA,
     column: 0,
     placeholder: 'High-level overview for the team.',
   },
   priority: {
     name: 'priority',
     label: 'Priority',
-    field: FieldType.Radio,
+    field: FieldType.RADIO,
     column: 0,
     defaultValue: 'normal',
     options: [
@@ -437,14 +437,14 @@ const columnLayoutSchema = defineFormSchema({
   owner: {
     name: 'owner',
     label: 'Owner',
-    field: FieldType.Input,
+    field: FieldType.INPUT,
     column: 1,
     placeholder: 'Assigned teammate',
   },
   status: {
     name: 'status',
     label: 'Status',
-    field: FieldType.Select,
+    field: FieldType.SELECT,
     column: 1,
     defaultValue: 'open',
     options: [
@@ -456,7 +456,7 @@ const columnLayoutSchema = defineFormSchema({
   submit: {
     name: 'submit',
     label: 'Save column example',
-    field: FieldType.Button,
+    field: FieldType.BUTTON,
     column: 1,
   },
 })

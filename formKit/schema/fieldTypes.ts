@@ -11,44 +11,44 @@ import { SwitchField } from '../components/fields/SwitchField'
 import { TextareaField } from '../components/fields/TextareaField'
 
 export const FieldType = {
-  Input: 'input',
-  SecretText: 'secretText',
-  Textarea: 'textarea',
-  Select: 'select',
-  Checkbox: 'checkbox',
-  SingleCheckbox: 'singleCheckbox',
-  Radio: 'radio',
-  Switch: 'switch',
-  Button: 'button',
-  Custom: 'custom',
+  INPUT: 'input',
+  SECRET_TEXT: 'secretText',
+  TEXTAREA: 'textarea',
+  SELECT: 'select',
+  CHECKBOX: 'checkbox',
+  SINGLE_CHECKBOX: 'singleCheckbox',
+  RADIO: 'radio',
+  SWITCH: 'switch',
+  BUTTON: 'button',
+  CUSTOM: 'custom',
 } as const
 
 export type FieldType = typeof FieldType[keyof typeof FieldType]
 
 type FieldComponentProps = {
-  [FieldType.Input]: ComponentProps<typeof InputField>
-  [FieldType.SecretText]: ComponentProps<typeof InputField>
-  [FieldType.Textarea]: ComponentProps<typeof TextareaField>
-  [FieldType.Select]: ComponentProps<typeof SelectField>
-  [FieldType.Checkbox]: ComponentProps<typeof CheckboxGroupField>
-  [FieldType.SingleCheckbox]: ComponentProps<typeof SingleCheckboxField>
-  [FieldType.Radio]: ComponentProps<typeof RadioField>
-  [FieldType.Switch]: ComponentProps<typeof SwitchField>
-  [FieldType.Button]: ComponentProps<typeof ButtonField>
-  [FieldType.Custom]: ComponentProps<typeof CustomField>
+  [FieldType.INPUT]: ComponentProps<typeof InputField>
+  [FieldType.SECRET_TEXT]: ComponentProps<typeof InputField>
+  [FieldType.TEXTAREA]: ComponentProps<typeof TextareaField>
+  [FieldType.SELECT]: ComponentProps<typeof SelectField>
+  [FieldType.CHECKBOX]: ComponentProps<typeof CheckboxGroupField>
+  [FieldType.SINGLE_CHECKBOX]: ComponentProps<typeof SingleCheckboxField>
+  [FieldType.RADIO]: ComponentProps<typeof RadioField>
+  [FieldType.SWITCH]: ComponentProps<typeof SwitchField>
+  [FieldType.BUTTON]: ComponentProps<typeof ButtonField>
+  [FieldType.CUSTOM]: ComponentProps<typeof CustomField>
 }
 
 export const fieldTypeComponentMap: {
   [K in FieldType]: ComponentType<FieldComponentProps[K]>
 } = {
-  [FieldType.Input]: InputField,
-  [FieldType.SecretText]: InputField,
-  [FieldType.Textarea]: TextareaField,
-  [FieldType.Select]: SelectField,
-  [FieldType.Checkbox]: CheckboxGroupField,
-  [FieldType.SingleCheckbox]: SingleCheckboxField,
-  [FieldType.Radio]: RadioField,
-  [FieldType.Switch]: SwitchField,
-  [FieldType.Button]: ButtonField,
-  [FieldType.Custom]: CustomField,
+  [FieldType.INPUT]: InputField,
+  [FieldType.SECRET_TEXT]: InputField,
+  [FieldType.TEXTAREA]: TextareaField,
+  [FieldType.SELECT]: SelectField,
+  [FieldType.CHECKBOX]: CheckboxGroupField,
+  [FieldType.SINGLE_CHECKBOX]: SingleCheckboxField,
+  [FieldType.RADIO]: RadioField,
+  [FieldType.SWITCH]: SwitchField,
+  [FieldType.BUTTON]: ButtonField,
+  [FieldType.CUSTOM]: CustomField,
 }

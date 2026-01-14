@@ -208,8 +208,8 @@ export function SchemaForm<TSchema extends FormSchema>({
     const fieldRules = resolveFieldRules(field)
 
     const fieldElement = (() => {
-      if (field.field === FieldType.Input) {
-        const Input = fieldTypeComponentMap[FieldType.Input]
+      if (field.field === FieldType.INPUT) {
+        const Input = fieldTypeComponentMap[FieldType.INPUT]
         return (
           <Input
             fieldId={fieldId}
@@ -230,8 +230,8 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.SecretText) {
-        const Input = fieldTypeComponentMap[FieldType.SecretText]
+      if (field.field === FieldType.SECRET_TEXT) {
+        const Input = fieldTypeComponentMap[FieldType.SECRET_TEXT]
         return (
           <Input
             fieldId={fieldId}
@@ -252,8 +252,8 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.Textarea) {
-        const Textarea = fieldTypeComponentMap[FieldType.Textarea]
+      if (field.field === FieldType.TEXTAREA) {
+        const Textarea = fieldTypeComponentMap[FieldType.TEXTAREA]
         return (
           <Textarea
             fieldId={fieldId}
@@ -270,8 +270,8 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.Select) {
-        const Select = fieldTypeComponentMap[FieldType.Select]
+      if (field.field === FieldType.SELECT) {
+        const Select = fieldTypeComponentMap[FieldType.SELECT]
         const options = resolveFieldOptions(field)
         return (
           <Select
@@ -290,8 +290,8 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.Checkbox) {
-        const Checkbox = fieldTypeComponentMap[FieldType.Checkbox]
+      if (field.field === FieldType.CHECKBOX) {
+        const Checkbox = fieldTypeComponentMap[FieldType.CHECKBOX]
         const options = resolveFieldOptions(field)
         return (
           <Checkbox
@@ -310,8 +310,8 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.SingleCheckbox) {
-        const SingleCheckbox = fieldTypeComponentMap[FieldType.SingleCheckbox]
+      if (field.field === FieldType.SINGLE_CHECKBOX) {
+        const SingleCheckbox = fieldTypeComponentMap[FieldType.SINGLE_CHECKBOX]
         return (
           <SingleCheckbox
             fieldId={fieldId}
@@ -328,8 +328,8 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.Switch) {
-        const Switch = fieldTypeComponentMap[FieldType.Switch]
+      if (field.field === FieldType.SWITCH) {
+        const Switch = fieldTypeComponentMap[FieldType.SWITCH]
         return (
           <Switch
             fieldId={fieldId}
@@ -346,8 +346,8 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.Radio) {
-        const Radio = fieldTypeComponentMap[FieldType.Radio]
+      if (field.field === FieldType.RADIO) {
+        const Radio = fieldTypeComponentMap[FieldType.RADIO]
         const options = resolveFieldOptions(field)
         return (
           <Radio
@@ -366,13 +366,13 @@ export function SchemaForm<TSchema extends FormSchema>({
         )
       }
 
-      if (field.field === FieldType.Button) {
-        const Button = fieldTypeComponentMap[FieldType.Button]
+      if (field.field === FieldType.BUTTON) {
+        const Button = fieldTypeComponentMap[FieldType.BUTTON]
         return <Button name={field.name} label={field.label} />
       }
 
-      if (field.field === FieldType.Custom) {
-        const Custom = fieldTypeComponentMap[FieldType.Custom]
+      if (field.field === FieldType.CUSTOM) {
+        const Custom = fieldTypeComponentMap[FieldType.CUSTOM]
         return (
           <Custom
             fieldId={fieldId}
@@ -438,7 +438,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       console.warn(
         'SchemaForm: row and column layout metadata cannot be mixed. Falling back to free layout.',
       )
-      return LayoutStrategy.Free
+      return LayoutStrategy.FREE
     }
 
     if (hasRow) {
@@ -449,9 +449,9 @@ export function SchemaForm<TSchema extends FormSchema>({
         console.warn(
           'SchemaForm: every visible field must declare a row when using row layout. Falling back to free layout.',
         )
-        return LayoutStrategy.Free
+        return LayoutStrategy.FREE
       }
-      return LayoutStrategy.Row
+      return LayoutStrategy.ROW
     }
 
     if (hasColumn) {
@@ -462,18 +462,18 @@ export function SchemaForm<TSchema extends FormSchema>({
         console.warn(
           'SchemaForm: every visible field must declare a column when using column layout. Falling back to free layout.',
         )
-        return LayoutStrategy.Free
+        return LayoutStrategy.FREE
       }
-      return LayoutStrategy.Column
+      return LayoutStrategy.COLUMN
     }
 
-    return LayoutStrategy.Free
+    return LayoutStrategy.FREE
   }
 
   const layoutStrategy = resolveLayoutStrategy(renderableFields)
 
   const renderFields = () => {
-    if (layoutStrategy === LayoutStrategy.Row) {
+    if (layoutStrategy === LayoutStrategy.ROW) {
       const rows = new Map<number, typeof renderableFields>()
       renderableFields.forEach((entry) => {
         const row = entry.field.row ?? 0
@@ -501,7 +501,7 @@ export function SchemaForm<TSchema extends FormSchema>({
         ))
     }
 
-    if (layoutStrategy === LayoutStrategy.Column) {
+    if (layoutStrategy === LayoutStrategy.COLUMN) {
       const columns = new Map<number, typeof renderableFields>()
       renderableFields.forEach((entry) => {
         const column = entry.field.column ?? 0

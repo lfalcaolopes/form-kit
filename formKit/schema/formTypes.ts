@@ -8,16 +8,16 @@ import type {
 import { FieldType } from './fieldTypes'
 
 type FieldValueByType = {
-  [FieldType.Input]: string
-  [FieldType.SecretText]: string
-  [FieldType.Textarea]: string
-  [FieldType.Select]: string
-  [FieldType.Checkbox]: string[]
-  [FieldType.SingleCheckbox]: boolean
-  [FieldType.Radio]: string
-  [FieldType.Switch]: boolean
-  [FieldType.Button]: never
-  [FieldType.Custom]: unknown
+  [FieldType.INPUT]: string
+  [FieldType.SECRET_TEXT]: string
+  [FieldType.TEXTAREA]: string
+  [FieldType.SELECT]: string
+  [FieldType.CHECKBOX]: string[]
+  [FieldType.SINGLE_CHECKBOX]: boolean
+  [FieldType.RADIO]: string
+  [FieldType.SWITCH]: boolean
+  [FieldType.BUTTON]: never
+  [FieldType.CUSTOM]: unknown
 }
 
 type FieldCondition = (args: {
@@ -65,7 +65,7 @@ export type CustomFieldComponentProps = {
 }
 
 type InputFieldConfig = BaseFieldConfig<string | number> & {
-  field: typeof FieldType.Input
+  field: typeof FieldType.INPUT
   type?: HTMLInputTypeAttribute
   placeholder?: string
   mask?: string
@@ -74,7 +74,7 @@ type InputFieldConfig = BaseFieldConfig<string | number> & {
 }
 
 type SecretTextFieldConfig = BaseFieldConfig<string> & {
-  field: typeof FieldType.SecretText
+  field: typeof FieldType.SECRET_TEXT
   placeholder?: string
   mask?: string
   inputBefore?: ReactNode
@@ -82,7 +82,7 @@ type SecretTextFieldConfig = BaseFieldConfig<string> & {
 }
 
 type TextareaFieldConfig = BaseFieldConfig<string> & {
-  field: typeof FieldType.Textarea
+  field: typeof FieldType.TEXTAREA
   placeholder?: string
 }
 
@@ -92,40 +92,40 @@ type SelectOption = {
 }
 
 type SelectFieldConfig = BaseFieldConfig<string> & {
-  field: typeof FieldType.Select
+  field: typeof FieldType.SELECT
   options?: SelectOption[]
   getOptions?: FieldOptionsResolver
   enumOptions?: EnumOptions
 }
 
 type CheckboxFieldConfig = BaseFieldConfig<string[]> & {
-  field: typeof FieldType.Checkbox
+  field: typeof FieldType.CHECKBOX
   options?: SelectOption[]
   getOptions?: FieldOptionsResolver
   enumOptions?: EnumOptions
 }
 
 type SwitchFieldConfig = BaseFieldConfig<boolean> & {
-  field: typeof FieldType.Switch
+  field: typeof FieldType.SWITCH
 }
 
 type SingleCheckboxFieldConfig = BaseFieldConfig<boolean> & {
-  field: typeof FieldType.SingleCheckbox
+  field: typeof FieldType.SINGLE_CHECKBOX
 }
 
 type RadioFieldConfig = BaseFieldConfig<string> & {
-  field: typeof FieldType.Radio
+  field: typeof FieldType.RADIO
   options?: SelectOption[]
   getOptions?: FieldOptionsResolver
   enumOptions?: EnumOptions
 }
 
 type ButtonFieldConfig = BaseFieldConfig<never> & {
-  field: typeof FieldType.Button
+  field: typeof FieldType.BUTTON
 }
 
 type CustomFieldConfig = BaseFieldConfig<unknown> & {
-  field: typeof FieldType.Custom
+  field: typeof FieldType.CUSTOM
   component: ComponentType<CustomFieldComponentProps & Record<string, unknown>>
   componentProps?: Record<string, unknown>
 }
@@ -152,9 +152,9 @@ type FieldValueFromConfig<TField extends FormFieldConfig> =
     : never
 
 export const LayoutStrategy = {
-  Free: 'free',
-  Row: 'row',
-  Column: 'column',
+  FREE: 'free',
+  ROW: 'row',
+  COLUMN: 'column',
 } as const
 
 export type LayoutStrategy =
