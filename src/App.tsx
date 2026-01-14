@@ -2,26 +2,24 @@ import { useId, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import {
+  Button,
   ButtonField,
   CheckboxGroupField,
   FieldGroup,
+  FormHeader,
   InputField,
   RadioField,
+  SchemaForm,
   SelectField,
   SingleCheckboxField,
   SwitchField,
   TextareaField,
-} from '../formKit/components/fields'
-import { FormHeader } from '../formKit/components/blocks/formHeader'
-import { Button } from '../formKit/components/units/button'
-import { SchemaForm } from '../formKit/forms'
-import {
+  cn,
   type CustomFieldComponentProps,
   defineFormSchema,
   FieldType,
   type FormValuesFromSchema,
-} from '../formKit/schema'
-import { cn } from '../formKit/utils'
+} from '@/formKit'
 
 const UrgencyLevel = {
   LOW: 'low',

@@ -13,12 +13,12 @@ import {
 
 import {
   FieldType,
-  fieldTypeComponentMap,
   type FormFieldConfig,
   type FormSchema,
   type FormValuesFromSchema,
   LayoutStrategy,
 } from '@/formKit/schema'
+import { fieldRegistry } from '@/formKit/registry'
 import { FieldGroup } from '@/formKit/components/fields/Field'
 import { FormHeader } from '@/formKit/components/blocks/formHeader'
 import { SectionHeader } from '@/formKit/components/blocks/sectionHeader'
@@ -209,7 +209,7 @@ export function SchemaForm<TSchema extends FormSchema>({
 
     const fieldElement = (() => {
       if (field.field === FieldType.INPUT) {
-        const Input = fieldTypeComponentMap[FieldType.INPUT]
+        const Input = fieldRegistry[FieldType.INPUT]
         return (
           <Input
             fieldId={fieldId}
@@ -231,7 +231,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.SECRET_TEXT) {
-        const Input = fieldTypeComponentMap[FieldType.SECRET_TEXT]
+        const Input = fieldRegistry[FieldType.SECRET_TEXT]
         return (
           <Input
             fieldId={fieldId}
@@ -253,7 +253,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.TEXTAREA) {
-        const Textarea = fieldTypeComponentMap[FieldType.TEXTAREA]
+        const Textarea = fieldRegistry[FieldType.TEXTAREA]
         return (
           <Textarea
             fieldId={fieldId}
@@ -271,7 +271,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.SELECT) {
-        const Select = fieldTypeComponentMap[FieldType.SELECT]
+        const Select = fieldRegistry[FieldType.SELECT]
         const options = resolveFieldOptions(field)
         return (
           <Select
@@ -291,7 +291,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.CHECKBOX) {
-        const Checkbox = fieldTypeComponentMap[FieldType.CHECKBOX]
+        const Checkbox = fieldRegistry[FieldType.CHECKBOX]
         const options = resolveFieldOptions(field)
         return (
           <Checkbox
@@ -311,7 +311,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.SINGLE_CHECKBOX) {
-        const SingleCheckbox = fieldTypeComponentMap[FieldType.SINGLE_CHECKBOX]
+        const SingleCheckbox = fieldRegistry[FieldType.SINGLE_CHECKBOX]
         return (
           <SingleCheckbox
             fieldId={fieldId}
@@ -329,7 +329,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.SWITCH) {
-        const Switch = fieldTypeComponentMap[FieldType.SWITCH]
+        const Switch = fieldRegistry[FieldType.SWITCH]
         return (
           <Switch
             fieldId={fieldId}
@@ -347,7 +347,7 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.RADIO) {
-        const Radio = fieldTypeComponentMap[FieldType.RADIO]
+        const Radio = fieldRegistry[FieldType.RADIO]
         const options = resolveFieldOptions(field)
         return (
           <Radio
@@ -367,12 +367,12 @@ export function SchemaForm<TSchema extends FormSchema>({
       }
 
       if (field.field === FieldType.BUTTON) {
-        const Button = fieldTypeComponentMap[FieldType.BUTTON]
+        const Button = fieldRegistry[FieldType.BUTTON]
         return <Button name={field.name} label={field.label} />
       }
 
       if (field.field === FieldType.CUSTOM) {
-        const Custom = fieldTypeComponentMap[FieldType.CUSTOM]
+        const Custom = fieldRegistry[FieldType.CUSTOM]
         return (
           <Custom
             fieldId={fieldId}
